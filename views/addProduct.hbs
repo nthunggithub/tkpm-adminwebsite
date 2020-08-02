@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="css/mystyle.css">
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                    <h1 style="color:Red;font-weight:bold; font-size:30px">THÊM SẢN PHẨM</h1>
+                     <hr>
+                     <div class="row">
+                    {{#if errors }}
+                        <h4 class="text-center text-danger">{{errors}}</h4>
+                    {{/if}}
+                    </div>
+               <form class="form-horizontal" method="post">
+                    <div class="form-group">
+                         <label class="col-lg-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên sản phẩm :</label>
+                         <div class="col-lg-8">
+                              <input class="form-control" type="text"  name="productname" minlength="3" required>
+                         </div>
+                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá gốc:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="number"  name="oldprice" minlength="3" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Khuyến mãi:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="saleoff" minlength="2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá mới:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="number"  name="price" minlength="3" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Loại:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="cat" min="2" required>
+                        </div>
+                    </div>
+                                        <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giới tính:</label>
+                        <div class="col-md-8">
+                              <select class="pro-edt-select form-control-primary" name="gender" required>
+                                <option value="nam" >Nam</option>
+                                <option value="nữ" >Nữ</option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Nhà sản xuất:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="producer" min="3" required>
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tồn kho:</label>
+                        <div class="col-md-8">
+                            <select class="pro-edt-select form-control-primary" name="availability">
+                                <option value="availability" >Có sẵn</option>
+                                <option value="unavailability" >Hết hàng</option>
+                              </select>
+                         </div>
+                     </div>
+                    <div class="form-group">
+                         <label class="col-md-3 control-label"></label>
+                         <div class="col-md-8">
+                            <button class="btn btn-block btn-primary" type="submit">THÊM</button>
+                        </div>
+                    </div>
+                </form>
+             </div>
+         </div>
+    </div>
+</div>
+

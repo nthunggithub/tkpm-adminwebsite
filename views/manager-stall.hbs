@@ -1,0 +1,50 @@
+
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h2><b>TẤT CẢ CÁC GIAN HÀNG</b></h2>
+                </div>
+                <div class="col-sm-7">
+                         <a href="/addStall" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span style="color:GREEN;font-weight:bold;">Thêm gian hàng</span></a>
+                    </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-light">
+                    <tr class="border-0">
+                        <th class="border-0"></th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Tên gian hàng</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Ngày Lập gian hàng</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Chi tiết</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each data}}
+                        <tr>
+                            <td></td>
+                            <td>{{name}}</td>
+                            <td>{{date}}</td>
+                            <td><a href="/stall-detail/{{_id}}" style="color: red;"><u>XEM</u></a></td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <ul class="pagination">
+                        {{#for total_page}}
+                            {{#ifCond currentpage @index}}
+                                <li   class="page-item active"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{else}}
+                                <li   class="page-item"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{/ifCond}}
+                        {{/for}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

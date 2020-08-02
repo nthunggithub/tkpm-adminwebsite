@@ -1,0 +1,108 @@
+
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h2><b>{{doc.name}}</b></h2>
+                </div>
+                
+                <div class="col-sm-7">
+                    <form method="POST">
+                        
+                        <div class="form-group">
+                            <input type="text" name="idDeleteStall" value="{{doc._id}}" hidden>
+                        </div>
+                        {{!-- <div class="form-group">
+                            <div  type="submit" >Xóa Gian hàng</div>
+                        </div> --}}
+                        <div class="form-group">
+                            <button type="submit" >Xóa Gian hàng</button>
+                        </div>
+                    </form>
+                    <a href="/addProduct/{{doc._id}}" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span style="color:GREEN;font-weight:bold;">Thêm sản phẩm</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-light">
+                    <tr class="border-0">
+                        <th class="border-0"></th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Hình</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Tên sản phẩm</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Giá</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Số lượng bán</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Chi tiết</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each data}}
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="m-r-10"><img src="{{imagePath}}" alt="user" class="rounded" width="45"></div>
+                            </td>
+                            <td>{{productname}}</td>
+                            <td>{{price}}</td>
+                            <td>{{qtysold}}</td>
+                            <td><a href="/product-detail/{{_id}}" style="color: red;"><u>XEM</u></a></td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <ul class="pagination">
+                        {{#for total_page}}
+                            {{#ifCond currentpage @index}}
+                                <li   class="page-item active"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{else}}
+                                <li   class="page-item"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{/ifCond}}
+                        {{/for}}
+                    </ul>
+                </div>
+
+
+                    <div class="card">
+                        <h5 class="card-header">
+                            Top 10 sản phẩm bán chạy nhất của {{doc.name}}
+                        </h5>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-light">
+                                    <tr class="border-0">
+
+                                        <th class="border-0">Image</th>
+                                        <th class="border-0">Product Name</th>
+                                        <th class="border-0">Quantity</th>
+                                        <th class="border-0">Product-detail</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {{#each top10}}
+
+                                        <tr>
+                                            <td>
+                                                <div class="m-r-10"><img src="{{imagePath}}" alt="user" class="rounded" width="45"></div>
+                                            </td>
+                                            <td>{{productname}}</td>
+                                            <td>{{qtysold}}</td>
+                                            <td><a href="/product-detail/{{_id}}">ProductDetail</a></td>
+                                            
+                                        </tr>
+
+                                    {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

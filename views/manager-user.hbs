@@ -1,0 +1,52 @@
+
+    
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>User <b>Management</b></h2>
+
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th style="color:blue;font-weight:bold; font-size:20px">Tài khoản</th>
+                    <th style="color:blue;font-weight:bold; font-size:20px">Trạng thái</th>
+                    <th style="color:blue;font-weight:bold; font-size:20px">Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each data}}
+                    <tr>
+                        <td></td>
+                        <td><a href="#">{{username}}</a></td>
+                        <td><a href="#">{{block}}</a></td>
+                        <td><a href="#">{{email}}</a></td>
+                        <td>
+                            <a href="/edit-customer-profile/{{username}}" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                        </td>
+                    </tr>
+
+                {{/each}}
+                </tbody>
+            </table>
+            <div class="clearfix">
+            <ul class="pagination">
+            {{#for total_page}}
+                {{#ifCond currentpage @index}}
+                    <li   class="page-item active"><a href="?page={{@index}}" >{{@index}}</a></li>
+                {{else}}
+                    <li   class="page-item"><a href="?page={{@index}}" >{{@index}}</a></li>
+                {{/ifCond}}
+            {{/for}}
+            </ul>
+            </div>
+        </div>
+
+    </div>
+
+                                                               

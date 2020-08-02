@@ -1,0 +1,91 @@
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                      <h1 style="color:red; font-weight:bold; font-size:35px">Chi tiết đơn hàng </h1>
+                      <hr>
+                      <div class="row">
+                      <div class="col-md-9 personal-info">
+                          <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">Tên đơn hàng:</td>
+                                                    <td> {{data.name}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Sản phẩm:</td>
+                                                    <td>{{#each data.cart.items}} {{item.productname}}</br> {{/each}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Tổng tiền:</td>
+                                                    <td> {{data.cart.totalPrice}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Địa chỉ:</td>
+                                                    <td> {{data.address}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Di động:</td>
+                                                    <td>{{data.phonenumber}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Phương thúc thanh toán:</td>
+                                                    {{#ifCond data.methodpay 0}}
+                                                    <td> COD </td>
+                                                    {{/ifCond}}
+                                                </tr>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Trạng thái:</td>
+                                                    <td>{{ConvertStatus data.status}} </td>
+                                                </tr>
+                                                <form method="post">
+                                                    <div class="form-group">
+                                                         <tr>
+                                                            <td><h5 style="color:blue;font-weight:bold; font-size:20px">Cập nhật trạng thái đơn hàng:</h5></td>
+                                                            <td> 
+                                                                <select name="StatusSelect">
+                                                                    {{#ifCond data.status 0}}
+                                                                        <option value="0" selected>Chờ lấy hàng</option>
+                                                                    {{else}}
+                                                                         <option value="0">Chờ lấy hàng</option>
+                                                                    {{/ifCond}}
+                                                                    {{#ifCond data.status 1}}
+                                                                        <option value="1" selected>Đang giao</option>
+                                                                    {{else}}
+                                                                        <option value="1" >Đang giao</option>
+                                                                    {{/ifCond}}
+                                                                    {{#ifCond data.status 2}}
+                                                                        <option value="2" selected>Đã nhận hàng</option>
+                                                                    {{else}}
+                                                                         <option value="2" >Đã nhận hàng</option>
+                                                                    {{/ifCond}}
+                                                                    {{#ifCond data.status 3}}
+                                                                        <option value="3" selected>Hủy</option>
+                                                                    {{else}}
+                                                                         <option value="3" >Hủy</option>
+                                                                    {{/ifCond}}
+                                                                </select>
+                                                             </td>
+                                                        </tr>
+                                                        <tr>
+                                                             <td><div class="col-md-12">
+                                                                     <button class="btn btn-block btn-primary" type="submit">CẬP NHẬT</button>
+                                                                 </div>
+                                                             </td>
+                                                        </tr>
+                                                     </div>
+                                                 </form>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                        
+                        </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

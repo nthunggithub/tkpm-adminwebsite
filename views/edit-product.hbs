@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="css/mystyle.css">
+
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                    <h1 style="color:Red;font-weight:bold; font-size:30px">THAY ĐỔI THÔNG TIN SẢN PHẨM</h1>
+                     <hr>
+                     <div class="row">
+                    {{# if errors }}
+                         <h4>{{errors}}</h4>
+                     {{/if}}
+                    </div>
+
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Ảnh sản phẩm</label>
+                        <div class="col-lg-8">
+                              <input class="form-control" type="file" name="myfile">
+                         </div>
+                         <div class="form-group">
+                             <label class="col-md-3 control-label"></label>
+                            <div class="col-md-8">
+                                <button class="btn btn-block btn-primary" type="submit">LƯU</button>
+                             </div>
+                        </div>
+                    </div>
+                </form> 
+               <form class="form-horizontal" method="post">
+                    <div class="form-group">
+                         <label class="col-lg-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên sản phẩm :</label>
+                         <div class="col-lg-8">
+                              <input class="form-control" type="text"  name="productname" minlength="5" value="{{data.productname}}">
+                         </div>
+                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá gốc:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="oldprice" minlength="3" value="{{data.oldprice}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Khuyến mãi:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="saleoff" minlength="2" value="{{data.saleoff}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá mới:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="price" minlength="3" value="{{data.price}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Loại:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="cat" minlength="3" value="{{data.cat}}">
+                        </div>
+                    </div>
+                   <div class="form-group">
+                       <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giới tính:</label>
+                            <select name="GenderSelect">
+                                {{#ifCond data.gender "nam"}}
+                                    <option value="nam" selected>nam</option>
+                                {{else}}
+                                    <option value="nam">nam</option>
+                                {{/ifCond}}
+                                {{#ifCond data.gender "nữ"}}
+                                    <option value="nữ" selected>nữ</option>
+                                {{else}}
+                                    <option value="nữ">nữ</option>
+                                {{/ifCond}}
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Nhà sản xuất:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text"  name="producer" minlength="3" value="{{data.producer}}">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Số lượng bán:</label>
+                        <div class="col-md-8">
+                             <label class="form-control" type="text"  name="salarysold" value="{{data.qtysold}}">{{data.qtysold}}</label>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tồn kho:</label>
+                        <div class="col-md-8">
+                             <label class="form-control" type="text"  name="availability" value="{{data.availability}}">{{data.availability}}</label>
+                         </div>
+                     </div>
+                    <div class="form-group">
+                         <label class="col-md-3 control-label"></label>
+                         <div class="col-md-8">
+                            <button class="btn btn-block btn-primary" type="submit">LƯU</button>
+                        </div>
+                    </div>
+                </form>
+             </div>
+         </div>
+    </div>
+</div>
+
