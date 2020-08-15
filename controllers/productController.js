@@ -19,14 +19,13 @@ var db=mysql.createConnection({
     console.log('Mysql Connected')
 })
 
-module.exports.deleteproduct= function(req,res,next){
+module.exports.deleteproduct= async function(req,res,next){
         const id=req.params.id;
-        Product.findById(id, (err, product)=>{
-            Product.deleteOne({_id:id},(err, data)=>{
-                res.redirect('/stall-detail/'+ product.IDSTall);
-        })
-       
-})};    
+        var sql = "DELETE FROM book WHERE ID_Book = ?";
+        const query = util.promisify(db.query).bind(db);
+        let status=query(sql,[id]);
+             
+};    
 
 //giao dien chinh
 module.exports.Index=async function(req,res,next){
@@ -85,11 +84,15 @@ module.exports.StallDetail= async function(req,res,next)
     })
 };
 //danh sach don dat hang
-module.exports.managementOrder=function(req,res,next)
+module.exports.managementOrder=async function(req,res,next)
 {
-    var product=Order.find((err,data)=>{
-      res.render('manager-order',{data:data});
-    })
+    const query = util.promisify(db.query).bind(db);
+    var perpage=10;
+    var Page=req.query.page||1;
+    var offset=10*(Page-1);
+    var sql ='SELECT * FROM orders Limit ? OFFSET ?';
+    const data=await query(sql,[perpage,offset]);
+    res.render('manager-order',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
 };
 module.exports.managerStall=async function(req,res,next){
 
@@ -101,9 +104,9 @@ module.exports.managerStall=async function(req,res,next){
 module.exports.managerBook=async function(req,res,next){
 
     const query = util.promisify(db.query).bind(db);
-    let perpage=10;
-    let Page=req.query.page||1;
-    let offset=10*(Page-1);
+    var perpage=10;
+    var Page=req.query.page||1;
+    var offset=10*(Page-1);
     var data=await query('SELECT * FROM book Limit ? OFFSET ?',[perpage,offset]);
     res.render('BookManagement',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
     
@@ -115,24 +118,27 @@ module.exports.productOrders= function(req, res, next) {
   };
 
 //Hien thi thong tin don dat hang
-module.exports.UpdateOrder=function(req,res,next)
+module.exports.UpdateOrder=async function(req,res,next)
 {
-    var product=Order.findOne({_id:req.params.id},(err,data)=>{
-        res.render('UpdateOrder',{data:data});
-    });
+    const query = util.promisify(db.query).bind(db);
+    var sql="SELECT * FROM orders WHERE ID_Order = ?";
+    var data = await query(sql,[req.params.id]);
+    var data2=await query('SELECT * FROM detail_order WHERE ID_Order = ?',[req.params.id]);
+    var ListBook=[];
+    for(i=0;i<data2.length;i++)
+    {
+        var Book=await query('SELECT NameBook FROM book WHERE ID_Book = ?',data2[i].ID_Book);
+        ListBook.push(Book[0].NameBook);
+    }
+    res.render('UpdateOrder',{data:data[0],ListBook:ListBook});
 };
 
 //Thay doi trang thai don dat hang
 exports.UpdateStatus=function(req,res,next)
 {
-    
-    Order.updateOne({_id:req.params.id},{$set:{status:parseInt(req.body.StatusSelect)}},function(err,res,next) {
-        if(err)
-        {
-            throw(err);
-        }
-    });
-   res.redirect("/manager-order");
+    const query = util.promisify(db.query).bind(db);
+    var status=query('UPDATE orders SET Status = ? ',[req.body.StatusSelect]);
+   res.redirect("/UpdateOrder/"+req.params.id);
 };
 module.exports.AddStall1=function(req,res,next){
     res.render('addStall');
@@ -156,6 +162,28 @@ exports.AddStall=async function(req,res,next){
             res.redirect('manager-stall');
         });
     }
+}
+
+exports.BillManagement=async function(req,res,next){
+    const query = util.promisify(db.query).bind(db);
+    var perpage=10;
+    var page=req.query.page||1;
+    var offset=10*(page-1);
+    var data=await query('SELECT * FROM bill Limit ? OFFSET ?',[perpage,offset]);
+    res.render('BillManagement',{data:data,currentpage:page,total_page:Math.ceil(data.length/perpage)});
+
+}
+exports.BillDetail=async function(req,res,next){
+    const query = util.promisify(db.query).bind(db);
+    var data=await query('SELECT * FROM bill WHERE ID_Bill = ?',[req.params.id]);
+    res.render('BillDetail',{data:data[0]});
+}
+exports.deleteOrder= async function(req,res,next){
+    const query = util.promisify(db.query).bind(db);
+    var status = await query('DELETE FROM bill WHERE ID_Order = ?',req.params.id);
+    var status2=await query('DELETE FROM detail_order WHERE ID_Order = ?',req.params.id);
+    var status3= await query('DELETE FROM orders WHERE ID_Order = ?',req.params.id);
+    res.redirect('/manager-order');
 }
 
 exports.deleteStall = async function(req, res, next){
@@ -185,6 +213,12 @@ module.exports.products=function(req,res,next)
     })
 };
 
+module.exports.DeleteBill = async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var status = await query('DELETE FROM bill WHERE ID_Bill = ?',[req.params.id]);
+    res.redirect('/BillManagement');
+}
 
 //trang thong tin san pham
 module.exports.productDetail=async function(req,res,next)

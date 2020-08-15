@@ -30,7 +30,7 @@ router.get('/products',middleware.isAuthenticated, ProductController.products);
 
 router.get('/product-detail/:id',middleware.isAuthenticated, ProductController.productDetail);
 
-router.post('/product-detail/:id',middleware.isAuthenticated, ProductController.deleteproduct);
+//router.post('/product-detail/:id',middleware.isAuthenticated, ProductController.deleteproduct);
 
 router.post('/edit-product/:id',middleware.isAuthenticated, Upload.postImage);
 
@@ -40,6 +40,13 @@ router.get('/addProduct',middleware.isAuthenticated, ProductController.addProduc
 
 router.post('/addProduct',middleware.isAuthenticated, Upload.AddPostProduct);
 
+router.post('/DeleteOrder/:id',middleware.isAuthenticated,ProductController.deleteOrder);
+
+router.get('/BillManagement',middleware.isAuthenticated,ProductController.BillManagement);
+
+router.get('/BillDetail/:id',middleware.isAuthenticated,ProductController.BillDetail);
+
+router.post('/DeleteBill/:id',middleware.isAuthenticated,ProductController.DeleteBill);
 //router.post('deleteproduct/:id',middleware.isAuthenticated, ProductController.deleteStall);
 
 //module.exports = router;

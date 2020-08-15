@@ -4,7 +4,21 @@ var User = require("../models/admin");
 var User2 = require("../models/User");
 var UserCustomer = require("../models/User")
 var bcrypt = require('bcrypt-nodejs');
+var mysql=require('mysql');
+const util = require('util');
+var db=mysql.createConnection({
+    host :  'localhost',
+    user :  'root',  
+    password : '0905172825',
+    database : 'shopping'
+  });
+  db.connect((err)=>{
 
+    if(err){
+        throw err;
+    }
+    console.log('Mysql Connected')
+})
 //dang ky
 module.exports.signup = function (req, res, next) {
     res.render('account/sign-up', { layout: 'layout-account.hbs', success: req.session.success, errors: req.session.errors });
@@ -168,37 +182,37 @@ module.exports.getProfile = function (req, res, next) {
 };
 
 // Khóa/Mở khóa tài khoản khách hàng
-exports.editProfileCustomer = function (req, res, next) {
+exports.editProfileCustomer = async function (req, res, next) {
     let check = true;
-    let temp = (req.body.block == "1");
-    User2.updateOne({ username: req.params.id }, { $set: { block: temp } }, (err, next) => {
-        res.redirect('/manager-user')
-    });
+    const query = util.promisify(db.query).bind(db);
+    var sql="UPDATE customer SET status = ? WHERE ID_Customer = ?"
+    const status =query(sql,[req.body.status,req.params.id]);
+    res.redirect('/edit-customer-profile/'+req.params.id);
 }
 
 //lay thong tin khach hang
-module.exports.editCustomer = function (req, res, next) {
-    var products = User2.findOne({ username: req.params.id }, (err, data) => {
-        res.render('edit-customer-profile', { data: data });
-    });
+module.exports.editCustomer = async function (req, res, next) {
+    const query = util.promisify(db.query).bind(db);
+    let data = await query('SELECT * FROM customer WHERE ID_Customer = ?',[req.params.id]);
+    var month = (1 + data[0].Birthday.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+
+    var day = data[0].Birthday.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;  
+    var birthday=(data[0].Birthday.getYear()+1900).toString()+'-'+month+'-'+day;
+    res.render("edit-customer-profile",{data:data[0],BornDay:birthday});
 };
 
 //danh sach khach hang
-module.exports.ManagerUser = function (req, res, next) {
+module.exports.ManagerUser = async function (req, res, next) {
 
-    let perpage = 5;
-    let page = req.query.page || 1;
-
-    UserCustomer.find().skip(perpage * (page - 1)).limit(perpage).exec((err, data) => {
-        UserCustomer.find().count().exec((err, count) => {
-            if (err) {
-                throw (err);
-            }
-            else {
-                res.render("manager-user", { data: data, currentpage: page, total_page: Math.ceil(count / perpage) });
-            }
-        })
-    })
+    const query = util.promisify(db.query).bind(db);
+    let perpage=10;
+    let Page=req.query.page||1;
+    let offset=10*(Page-1);
+    var data=await query('SELECT * FROM customer Limit ? OFFSET ?',[perpage,offset]);
+    res.render('manager-user',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
+    
 };
 
 //dang xuat

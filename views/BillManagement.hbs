@@ -4,7 +4,20 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-5">
-                    <h2><b>TẤT CẢ ĐƠN HÀNG</b></h2>
+                    <h2><b>Quản lí phiếu thu tiền</b></h2>
+                </div>
+                
+                <div class="col-sm-7">
+                    <form method="POST">
+                        
+                        {{!-- <div class="form-group">
+                            <input type="text" name="idDeleteStall" value="{{doc._id}}" hidden>
+                        </div> --}}
+                        {{!-- <div class="form-group">
+                            <div  type="submit" >Xóa Gian hàng</div>
+                        </div> --}}
+                    </form>
+                    <a href="/addProduct" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span style="color:GREEN;font-weight:bold;">Thêm phiếu thu tiền</span></a>
                 </div>
             </div>
         </div>
@@ -14,10 +27,8 @@
                     <thead class="bg-light">
                     <tr class="border-0">
                         <th class="border-0"></th>
-                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">ID đơn hàng</th>
-                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Địa chỉ</th>
-                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Gía tiền</th>
-                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Trạng Thái</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">ID_Bill</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">ID_Order</th>
                         <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Chi tiết</th>
                     </tr>
                     </thead>
@@ -25,13 +36,9 @@
                     {{#each data}}
                         <tr>
                             <td></td>
+                            <td>{{ID_Bill}}</td>
                             <td>{{ID_Order}}</td>
-                            <td>{{Address}}</td>
-                            <td>{{Amount}}</td>
-                            <td>{{Status}}</td>
-                            <td >
-                                <a href="/UpdateOrder/{{ID_Order}}" style="color: red;"><u>XEM</u></a>
-                            </td>
+                            <td><a href="/BillDetail/{{ID_Bill}}" style="color: red;"><u>XEM</u></a></td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -46,6 +53,8 @@
                             {{/ifCond}}
                         {{/for}}
                     </ul>
+                </div>
+                
                 </div>
             </div>
         </div>

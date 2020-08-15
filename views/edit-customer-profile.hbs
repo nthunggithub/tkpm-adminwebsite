@@ -21,73 +21,66 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Tên tài khoản:</label>
                                     <div class="col-lg-8">
-                                            <label class="form-control" type="text" name="username" value="{{data.username}}">{{data.username}}</label>
+                                            <label class="form-control" type="text" name="username" value="{{data.UserName}}">{{data.UserName}}</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Email:</label>
                                     <div class="col-lg-8">
-                                        <label class="form-control" type="email" name="email" value="{{data.email}}">{{data.email}}</label>
+                                        <label class="form-control" type="email" name="email" value="{{data.Email}}">{{data.Email}}</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Tên:</label>
                                      <div class="col-lg-8">
-                                             <label class="form-control" type="text" name="name" value="{{data.name}}">{{data.name}}</label>
+                                             <label class="form-control" type="text" name="name" value="{{data.FullName}}">{{data.FullName}}</label>
                                      </div>
-                                 </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Biệt danh:</label>
-                                     <div class="col-lg-8">
-                                             <label class="form-control" type="text" name="nickname" value="{{data.nickname}}">{{data.nickname}}</label>
-                                     </div>
-                                 </div>
+                                 </div>  
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Di động:</label>
                                      <div class="col-lg-8">
-                                             <label class="form-control" type="text" name="phonenumber" value="{{data.phonenumber}}">{{data.phonenumber}}</label>
+                                             <label class="form-control" type="text" name="phonenumber" value="{{data.Phone}}">{{data.Phone}}</label>
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Địa chỉ:</label>
+                                     <div class="col-lg-8">
+                                             <label class="form-control" type="text" name="address" value="{{data.Address}}">{{data.Address}}</label>
                                      </div>
                                  </div>
                                    <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Giới tính:</label>
                                      <div class="col-lg-8">
-                                         {{#ifCond data.gender 0}}
+                                         {{#ifCond data.Gender Nam}}
                                              <label class="form-control" type="text" name="gender" >Nam</label>
                                              {{else}}
-                                             {{#ifCond data.gender 1}}
+                                             {{#ifCond data.Gender Nữ}}
                                              <label class="form-control" type="text" name="gender" >Nữ</label>
                                              {{else}}
-                                             {{#ifCond data.gender 2}}
+                                             {{#ifCond data.Gender Khác}}
                                              <label class="form-control" type="text" name="gender" >Khác</label>
                                              {{else}}
-                                             <label class="form-control" type="text" name="gender" ></label>
+                                             <label class="form-control" type="text" name="gender" >Khác</label>
                                              {{/ifCond}}
                                              {{/ifCond}}
                                              {{/ifCond}}
-
                                      </div>
                                  </div>
                                    <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Ngày sinh:</label>
                                      <div class="col-lg-8">
-                                             <label class="form-control" type="text" name="date" value="{{data.date}}">{{data.date}}</label>
-                                     </div>
-                                 </div>
-                                   <div class="form-group">
-                                    <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Tuổi:</label>
-                                     <div class="col-lg-8">
-                                             <label class="form-control" type="text" name="age" value="{{data.age}}">{{data.age}}</label>
+                                             <input type="date" name="date" value={{BornDay}} min="1950-01-01" max="2019-01-01" readonly>
                                      </div>
                                  </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Trạng thái:</label>
-                                    <select name="block">
-                                        {{#ifCond data.block true}}
+                                    <select name="status">
+                                        {{#ifCond data.Status 1}}
                                             <option value="1" selected>true</option>
                                         {{else}}
                                             <option value="1">true</option>
                                         {{/ifCond}}
-                                        {{#ifCond data.block false}}
+                                        {{#ifCond data.Status 0}}
                                             <option value="0" selected>false</option>
                                         {{else}}
                                             <option value="0">false</option>
