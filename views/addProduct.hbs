@@ -15,19 +15,19 @@
                     <div class="form-group">
                          <label class="col-lg-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên sản phẩm :</label>
                          <div class="col-lg-8">
-                              <input class="form-control" type="text"  name="BookName" minlength="5" value="{{data.NameBook}}">
+                              <input class="form-control" type="text"  name="BookName" minlength="5" >
                          </div>
                      </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá gốc:</label>
                         <div class="col-md-8">
-                              <input class="form-control" type="text"  name="Price" minlength="3" value="{{data.Price}}">
+                              <input class="form-control" type="number" step="500"  name="Price" minlength="3" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Mô tả:</label>
                         <div class="col-md-8">
-                              <input class="form-control" type="text"  name="Description" minlength="2" value="{{data.Description}}">
+                              <input class="form-control" type="text"  name="Description" minlength="2" >
                         </div>
                     </div>
 
@@ -139,6 +139,12 @@
                                         <option value="5">Nhà xuất bản Trẻ</option>
                                     {{/ifCond}}                                                               
                             </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Số lượng sản phẩm:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="number"  name="Quantity" minlength="3">
+                        </div>
                     </div>
                     <div class="form-group">
                          <label class="col-md-3 control-label"></label>

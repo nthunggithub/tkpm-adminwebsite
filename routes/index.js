@@ -36,9 +36,9 @@ router.post('/edit-product/:id',middleware.isAuthenticated, Upload.postImage);
 
 router.get('/edit-product/:id',middleware.isAuthenticated, ProductController.EditProduct);
 
-router.get('/addProduct/:id',middleware.isAuthenticated, ProductController.addProduct);
+router.get('/addProduct',middleware.isAuthenticated, ProductController.addProduct);
 
-router.post('/addProduct/:id',middleware.isAuthenticated, Upload.AddPostProduct);
+router.post('/addProduct',middleware.isAuthenticated, Upload.AddPostProduct);
 
 //router.post('deleteproduct/:id',middleware.isAuthenticated, ProductController.deleteStall);
 

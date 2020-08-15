@@ -70,61 +70,39 @@ exports.AddPostProduct=async function(req,res,next)
 {
             let errors="";
             let check=true;
-            products=new Product();
-            products.IDSTall=req.params.id;
-            products.productname=req.body.productname;
-            products.oldprice=req.body.oldprice;
-            products.saleoff=req.body.saleoff;
-            products.price=req.body.price;
-            products.cat=req.body.cat;
-            products.gender=req.body.gender;
-            products.producer=req.body.producer;
-            products.availability=req.body.availability;
-            if(req.body.productname==="")
+            console.log("Debug");
+            if(req.body.BookName==="")
             {
                 check=false;
                 errors="Bạn chưa nhập tên sản phẩm";
             }
-             if(req.body.oldprice==="")
-            {
-                check=false;
-                errors="Bạn chưa nhập giá gốc sản phẩm";
-            }
-            if(req.body.saleoff==="")
-            {
-                check=false;
-                errors="Bạn chưa nhập khuyến mãi";
-            }
-            if(req.body.price==="")
+             if(req.body.Price==="")
             {
                 check=false;
                 errors="Bạn chưa nhập giá sản phẩm";
             }
-            if(req.body.cat==="")
+            if(req.body.Description==="")
             {
                 check=false;
-                errors="Bạn chưa nhập loại sản phẩm";
+                errors="Bạn chưa nhập mô tả";
             }
-            if(req.body.gender==="")
+            if(req.body.Quantity==="")
             {
                 check=false;
-                errors="Bạn chưa nhập giới tính";
+                errors="Bạn chưa nhập số lượng sản phẩm";
             }
-            if(req.body.producer==="")
-            {
-                check=false;
-                errors="Bạn chưa nhập nhà sản xuất";
-            }
-            
+                      
             if(check===true)
             {
-                await products.save((err,next)=>{
-                    res.redirect('/stall-detail/'+ req.params.id);
-                });
+                const query = util.promisify(db.query).bind(db);
+                let sql ="INSERT INTO book(NameBook,ID_Category,Price,ID_Author,ID_Publisher,Quantity_Book,Description,imagePath) VALUES (?,?,?,?,?,?,?,?)";
+                let values=[req.body.BookName,req.body.Category,req.body.Price,req.body.Author,req.body.Publisher,req.body.Quantity,req.body.Description,'../plugins/images/default.jpg'];
+                const State = await query(sql,values);
+                res.redirect('/BookManagement');
             }
             else
             {
                 req.flash("errorsaddProduct", errors)
-                res.redirect('/addProduct/'+ req.params.id);
+                res.redirect('/addProduct');
             }
 };
