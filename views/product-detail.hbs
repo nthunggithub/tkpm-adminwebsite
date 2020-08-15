@@ -5,10 +5,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="white-box">
-                            <a href="/edit-product/{{data._id}}" class="btn btn-primary">CHỈNH SỬA</a>
+                            <a href="/edit-product/{{data.ID_Book}}" class="btn btn-primary">CHỈNH SỬA</a>
                             <form action="#" method="POST">
                                 <div class="form-group">
-                                    <input type="text" value="{{data._id}}" hidden name="iddelete">
+                                    <input type="text" value="{{data.ID_Book}}" hidden name="iddelete">
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary" type="submit">Xóa</button>
@@ -19,15 +19,16 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-6">
                                     <div class="white-box text-center">
-                                        <img src="{{data.imagePath}}" width="300px" id="product-image" class="img-responsive" />
+                                        <img src="/{{data.imagePath}}" width="300px" id="product-image" class="img-responsive" />
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                                 <div class="col-md-8 col-sm-6">
                                     <h4 class="box-title m-t-0" style="color:red; font-weight:bold; font-size:35px">{{data.productname}}</h4>
-                                    <h5 class="box-title m-t-0" style="color:orange; font-weight:bold; font-size:20px" >Giá: {{data.price}} VNĐ</h5>
+                                    <h5 class="box-title m-t-0" style="color:orange; font-weight:bold; font-size:20px" >Mô tả: {{data.Description}}</h5>
+                                    <h5 class="box-title m-t-0" style="color:orange; font-weight:bold; font-size:20px" >Gía: {{data.Price}}</h5>
                                     <hr>
-                                    <p>{{data.description}}</p>
+                                    <p>{{data.Description}}</p>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h6>Color</h6>
@@ -62,35 +63,24 @@
                                             <tbody>
                                                 <tr>
                                                     <td width="390" style="color:black;font-weight:bold; font-size:20px">Giá gốc</td>
-                                                    <td> {{data.oldprice}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Khuyến mãi</td>
-                                                    <td> {{data.saleoff}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Giá mới:</td>
-                                                    <td> {{data.price}} </td>
+                                                    <td> {{data.Price}} </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="color:black;font-weight:bold; font-size:20px">Loại</td>
-                                                    <td> {{data.cat}} </td>
+                                                    <td> {{data2.NameCategory}} </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Nhà xuất bản</td>
+                                                    <td> {{data3.NamePublisher}} </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Giới tính</td>
-                                                    <td>{{data.gender}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Nhà sản xuất</td>
-                                                    <td> {{data.producer}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Số lượng đã bán</td>
-                                                    <td>{{data.qtysold}} </td>
+                                                    <td style="color:black;font-weight:bold; font-size:20px">Tác giả</td>
+                                                    <td>{{data4.NameAuthor}} </td>
                                                 </tr>
                                                 <tr>
                                                     <td style="color:black;font-weight:bold; font-size:20px">Tồn kho</td>
-                                                    <td> {{data.availability}} </td>
+                                                    <td> {{data.Quantity_Book}} </td>
                                                 </tr>
                                             </tbody>
                                         </table>

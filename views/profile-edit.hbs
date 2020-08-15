@@ -25,28 +25,21 @@
                       <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">First name:</label>
 
                       <div class="col-lg-8">
-                          <input class="form-control" type="text" minlength="3" name="firstname" value="{{data.firstname}}" >
+                          <input class="form-control" type="text" minlength="3" name="firstname" value="{{data.FullName}}" >
                       </div>
 
                   </div>
-
-                  <div class="form-group">
-                      <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Last name:</label>
-                      <div class="col-lg-8">
-                          <input class="form-control" type="text" minlength="3" name="lastname" value="{{data.lastname}}">
-                      </div>
-                  </div>
-
+                    
                   <div class="form-group">
                       <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Email:</label>
                       <div class="col-lg-8">
-                          <input class="form-control" type="email" minlength="3" name="email" value="{{data.email}}">
+                          <input class="form-control" type="email" minlength="3" name="email" value="{{data.Email}}">
                       </div>
                   </div>
                   <div class="form-group">
                       <label class="col-md-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Username:</label>
                       <div class="col-md-8">
-                          <input class="form-control" type="text" minlength="3" name="username" value="{{data.username}}" required oninvalid="this.setCustomValidity('Yêu cầu nhập a-z A-Z 0-9 - _ .')" oninput="this.setCustomValidity('');" pattern="^(?=.{6,20}$)(?:[a-zA-Z\d]+(?:(?:\.|-|_)[a-zA-Z\d])*)+$">
+                          <input class="form-control" type="text" minlength="3" name="username" value="{{data.UserName}}" required oninvalid="this.setCustomValidity('Yêu cầu nhập a-z A-Z 0-9 - _ .')" oninput="this.setCustomValidity('');" pattern="^(?=.{6,20}$)(?:[a-zA-Z\d]+(?:(?:\.|-|_)[a-zA-Z\d])*)+$">
                       </div>
                   </div>
                   <div class="form-group">

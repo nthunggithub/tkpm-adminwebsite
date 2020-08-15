@@ -8,6 +8,8 @@ router.get('/', middleware.isAuthenticated, ProductController.Index);
 
 router.get('/stall-detail/:id',middleware.isAuthenticated,ProductController.StallDetail);
 
+router.get('/BookManagement',middleware.isAuthenticated,ProductController.managerBook);
+
 router.post('/stall-detail/:id', middleware.isAuthenticated, ProductController.deleteStall);
 
 router.get('/addStall',middleware.isAuthenticated,ProductController.AddStall1);

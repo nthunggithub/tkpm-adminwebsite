@@ -154,6 +154,7 @@ exports.EditProfile = async function (req, res, next) {
 
 //lay thong tin ca nhan
 module.exports.getProfile = function (req, res, next) {
+    console.log(req.params.id);
     var product = User.findOne({ username: req.params.id }, (err, data) => {
         res.render("profile-edit", { data: data });
     });

@@ -93,39 +93,22 @@
                                             <table class="table">
                                                 <thead class="bg-light">
                                                     <tr class="border-0">
-
                                                         <th class="border-0">Image</th>
-                                                        <th class="border-0">Product Name</th>
-                                                        <th class="border-0">Quantity</th>
-                                                        <th class="border-0">Product-detail</th>
+                                                        <th class="border-0">Tên sách</th>
+                                                        <th class="border-0">Số lượng còn lại</th>
+                                                        <th class="border-0">Book Detail</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    {{!-- <tr>
-                                                        <td>{{this.stt}}</td>
-                                                        <td>
-                                                            <div class="m-r-10"><img src="assets/images/product-pic.jpg" alt="user" class="rounded" width="45"></div>
-                                                        </td>
-                                                        <td>{{this.productname}}</td>
-                                                        <td>{{this.productID}} </td>
-                                                        <td>{{this.quantity}}</td>
-                                                        <td>${{this.price}}</td>
-                                                        <td>{{this.date}}</td>
-                                                        <td>{{this.owner}} </td>
-                                                        <td><span class="badge-dot badge-brand mr-1"></span>{{this.status}} </td>
-                                                    </tr> --}}
+                                                <tbody>                                                
                                                 {{#each data}}
-
                                                     <tr>
                                                         <td>
                                                             <div class="m-r-10"><img src="{{imagePath}}" alt="user" class="rounded" width="45"></div>
                                                         </td>
-                                                        <td>{{productname}}</td>
-                                                        <td>{{qtysold}}</td>
-                                                        <td><a href="/product-detail/{{_id}}">ProductDetail</a></td>
-                                                        
+                                                        <td>{{NameBook}}</td>
+                                                        <td>{{Quantity_Book}}</td>
+                                                        <td><a href="/product-detail/{{ID_Book}}">ProductDetail</a></td>                                        
                                                     </tr>
-
                                                 {{/each}}
                                                 </tbody>
                                             </table>

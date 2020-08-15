@@ -1,0 +1,68 @@
+
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-5">
+                    <h2><b>Quản lí sách</b></h2>
+                </div>
+                
+                <div class="col-sm-7">
+                    <form method="POST">
+                        
+                        {{!-- <div class="form-group">
+                            <input type="text" name="idDeleteStall" value="{{doc._id}}" hidden>
+                        </div> --}}
+                        {{!-- <div class="form-group">
+                            <div  type="submit" >Xóa Gian hàng</div>
+                        </div> --}}
+                    </form>
+                    <a href="/addProduct" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span style="color:GREEN;font-weight:bold;">Thêm sách</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-light">
+                    <tr class="border-0">
+                        <th class="border-0"></th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Hình</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Tên sách</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Giá</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Số lượng tồn</th>
+                        <th class="border-0" style="color:blue;font-weight:bold; font-size:20px">Chi tiết</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each data}}
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="m-r-10"><img src="{{imagePath}}" alt="user" class="rounded" width="45"></div>
+                            </td>
+                            <td>{{NameBook}}</td>
+                            <td>{{Price}}</td>
+                            <td>{{Quantity_Book}}</td>
+                            <td><a href="/product-detail/{{ID_Book}}" style="color: red;"><u>XEM</u></a></td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <ul class="pagination">
+                        {{#for total_page}}
+                            {{#ifCond currentpage @index}}
+                                <li   class="page-item active"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{else}}
+                                <li   class="page-item"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{/ifCond}}
+                        {{/for}}
+                    </ul>
+                </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,21 @@ var multer=require('multer');
 var Product=require("../models/product");
 var Order=require("../models/Order");
 var Stall=require("../models/Stall");
+var mysql=require('mysql');
+const util = require('util');
+var db=mysql.createConnection({
+    host :  'localhost',
+    user :  'root',  
+    password : '0905172825',
+    database : 'shopping'
+  });
+  db.connect((err)=>{
+
+    if(err){
+        throw err;
+    }
+    console.log('Mysql Connected')
+})
 
 module.exports.deleteproduct= function(req,res,next){
         const id=req.params.id;
@@ -17,16 +32,13 @@ module.exports.deleteproduct= function(req,res,next){
 module.exports.Index=async function(req,res,next){
     var productChuck = [];
     var chucksize = 1;
-    var products = await Product.find((error, docs) =>{
-        // var productChuck = [];
-        // var chucksize = 1;c
-        for(var i=0; i< docs.length; i+=chucksize){
-            productChuck.push(docs.slice(i, i+chucksize))
-        }
-
-    });
-
-    let data=await Order.find({},{date:1, cart:1, _id:0});
+    const query = util.promisify(db.query).bind(db);
+    
+    const products = await query("SELECT * FROM book");  
+    
+ //   let data=await Order.find({},{date:1, cart:1, _id:0});
+    const data = await query("SELECT * FROM Orders");  
+    console.log(data);
     //console.log(data[0].cart);
     var RevenueYear=0;
     var RevenueMonth=0;
@@ -34,25 +46,25 @@ module.exports.Index=async function(req,res,next){
     var RevenueQuarter=0;
    for (var i=0;i<data.length;i++)
    {
-       var s=data[i].date.split('/');
+       var Day=data[i].DateCreated.getDate();
+       var Month=data[i].DateCreated.getMonth()+1;
+       var Year=data[i].DateCreated.getFullYear();
         currentdate=new Date();
         var Quarter=Math.floor((currentdate.getMonth()+1)/3);
         console.log(Quarter);
         var mod=(currentdate.getMonth()+1)%3;
         if(mod>0)
             Quarter++;
-       if(String(currentdate.getFullYear())===s[2])
-           RevenueYear+=data[i].cart.totalPrice;
-       if(String(currentdate.getMonth()+1)===s[1]&&String(currentdate.getFullYear())===s[2])
-           RevenueMonth+=data[i].cart.totalPrice;
-       if(parseInt(s[1])>=(Quarter-1)*3+1&&parseInt(s[1])<=(Quarter-1)*3+3)
-           RevenueQuarter+=data[i].cart.totalPrice;
-       if(String(currentdate.getDate())===s[0]&&String(currentdate.getFullYear()===s[2])&&String(currentdate.getMonth()+1===s[1]))
-           RevenueDay+=data[i].cart.totalPrice;
-   }
-    let data2=await Product.find().limit(10).sort({qtysold:-1});
-
-    res.render('index', { title: 'Express', products: productChuck,data:data2,RevenueQuarter:RevenueQuarter,RevenueDay:RevenueDay,RevenueMonth:RevenueMonth,RevenueYear:RevenueYear,Day:currentdate.getDate(),Quarter:Quarter,Month:currentdate.getMonth()+1,Year:currentdate.getFullYear()});
+       if(String(currentdate.getFullYear())===Year)
+           RevenueYear+=data[i].Amount;
+       if(String(currentdate.getMonth()+1)===Month&&String(currentdate.getFullYear())===Year)
+           RevenueMonth+=data[i].Amount;
+       if(parseInt(Month)>=(Quarter-1)*3+1&&parseInt(Month)<=(Quarter-1)*3+3)
+           RevenueQuarter+=data[i].Amount
+       if(String(currentdate.getDate())===Day&&String(currentdate.getFullYear()===Year)&&String(currentdate.getMonth()+1===Month))
+           RevenueDay+=data[i].cart.Amount;
+   }   
+    res.render('index', { title: 'Express',data:products,RevenueQuarter:RevenueQuarter,RevenueDay:RevenueDay,RevenueMonth:RevenueMonth,RevenueYear:RevenueYear,Day:currentdate.getDate(),Quarter:Quarter,Month:currentdate.getMonth()+1,Year:currentdate.getFullYear()});
 };
 module.exports.StallDetail= async function(req,res,next)
 {
@@ -85,6 +97,18 @@ module.exports.managerStall=async function(req,res,next){
         res.render('manager-stall',{data:data});
     })
 }
+
+module.exports.managerBook=async function(req,res,next){
+
+    const query = util.promisify(db.query).bind(db);
+    let perpage=10;
+    let Page=req.query.page||1;
+    let offset=10*(Page-1);
+    var data=await query('SELECT * FROM book Limit ? OFFSET ?',[perpage,offset]);
+    res.render('BookManagement',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
+    
+}
+
 //Don dat hang
 module.exports.productOrders= function(req, res, next) {
     res.render('product-orders');
@@ -163,19 +187,26 @@ module.exports.products=function(req,res,next)
 
 
 //trang thong tin san pham
-module.exports.productDetail=function(req,res,next)
+module.exports.productDetail=async function(req,res,next)
 {
-  var product=Product.findOne({_id:req.params.id},(err,data)=>{
-          res.render('product-detail',{data:data});
-  });
+    
+    const query = util.promisify(db.query).bind(db);
+    result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
+    result2=await query('SELECT * FROM category WHERE ID_Category = ?',[result1[0].ID_Category]);
+    result3=await query('SELECT * FROM publisher WHERE ID_Publisher = ?',[result1[0].ID_Publisher]);
+    result4=await query('SELECT * FROM author WHERE ID_Author = ?',[result1[0].ID_Author]);
+    res.render('product-detail',{data:result1[0],data2:result2[0],data3:result3[0],data4:result4[0]});
 };
 
 //Lay thong tin san pham
-module.exports.EditProduct=function(req,res,next)
+module.exports.EditProduct=async function(req,res,next)
 {
-    var product=Product.findOne({_id:req.params.id},(err,data)=>{
-        res.render("edit-product",{data:data});
-    })
+    const query = util.promisify(db.query).bind(db);
+    result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
+    result2=await query('SELECT * FROM category WHERE ID_Category = ?',[result1[0].ID_Category]);
+    result3=await query('SELECT * FROM publisher WHERE ID_Publisher != ?',[result1[0].ID_Publisher]);
+    result4=await query('SELECT * FROM author WHERE ID_Author = ?',[result1[0].ID_Author]);
+    res.render('edit-product',{data:result1[0],data2:result2[0],data3:result3,data4:result4[0]});
 };
 
 

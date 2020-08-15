@@ -15,57 +15,131 @@
                     <div class="form-group">
                          <label class="col-lg-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên sản phẩm :</label>
                          <div class="col-lg-8">
-                              <input class="form-control" type="text"  name="productname" minlength="3" required>
+                              <input class="form-control" type="text"  name="BookName" minlength="5" value="{{data.NameBook}}">
                          </div>
                      </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá gốc:</label>
                         <div class="col-md-8">
-                              <input class="form-control" type="number"  name="oldprice" minlength="3" required>
+                              <input class="form-control" type="text"  name="Price" minlength="3" value="{{data.Price}}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Khuyến mãi:</label>
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Mô tả:</label>
                         <div class="col-md-8">
-                              <input class="form-control" type="text"  name="saleoff" minlength="2">
+                              <input class="form-control" type="text"  name="Description" minlength="2" value="{{data.Description}}">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giá mới:</label>
-                        <div class="col-md-8">
-                              <input class="form-control" type="number"  name="price" minlength="3" min="0" required>
-                        </div>
+
+                     <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tác giả:</label>
+                                 <select name="Author">
+                                    {{#ifCond data.ID_Author 1}}                                                               
+                                        <option value="1" selected>Fujima</option>
+                                    {{else}}
+                                        <option value="1">Fujima</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Author 2}}                                                               
+                                        <option value="2" selected>Donald Trump</option>
+                                    {{else}}
+                                        <option value="2">Donald Trump</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Author 3}}                                                               
+                                        <option value="3" selected>Nam Cao</option>
+                                    {{else}}
+                                        <option value="3">Nam Cao</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Author 4}}                                                               
+                                        <option value="4" selected>Xuân Quỳnh</option>
+                                    {{else}}
+                                        <option value="4">Xuân Quỳnh</option>
+                                    {{/ifCond}}
+                                    
+                                    {{#ifCond data.ID_Author 5}}                                                               
+                                        <option value="5" selected>Hàn Mặc Tử</option>
+                                    {{else}}
+                                        <option value="5">Hàn Mặc Tử</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Author 6}}                                                               
+                                        <option value="6" selected>Xuân Diệu</option>
+                                    {{else}}
+                                        <option value="6">Xuân Diệu</option>
+                                    {{/ifCond}}                                                                  
+                            </select>
                     </div>
+
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Loại:</label>
-                        <div class="col-md-8">
-                              <input class="form-control" type="text"  name="cat" min="2" required>
-                        </div>
+                                 <select name="Category">
+                                    {{#ifCond data.ID_Category 1}}                                                               
+                                        <option value="1" selected>Truyện</option>
+                                    {{else}}
+                                        <option value="1">Truyện</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Category 2}}                                                               
+                                        <option value="2" selected>Sách tham khảo</option>
+                                    {{else}}
+                                        <option value="2">Sách tham khảo</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Category 3}}                                                               
+                                        <option value="3" selected>Sách giáo khoa</option>
+                                    {{else}}
+                                        <option value="3">Sách giáo khoa</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Category 4}}                                                               
+                                        <option value="4" selected>Tác phẩm văn học</option>
+                                    {{else}}
+                                        <option value="4">Tác phẩm văn học</option>
+                                    {{/ifCond}}
+                                    
+                                    {{#ifCond data.ID_Category 5}}                                                               
+                                        <option value="5" selected>Báo,Tạp chí</option>
+                                    {{else}}
+                                        <option value="5">Báo,Tạp chí</option>
+                                    {{/ifCond}}                                                               
+                            </select>
                     </div>
-                                        <div class="form-group">
-                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Giới tính:</label>
-                        <div class="col-md-8">
-                              <select class="pro-edt-select form-control-primary" name="gender" required>
-                                <option value="nam" >Nam</option>
-                                <option value="nữ" >Nữ</option>
-                              </select>
-                        </div>
+                   <div class="form-group">
+                       <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Nhà Xuất Bản:</label>
+                            <select name="Publisher">
+                                    {{#ifCond data.ID_Publisher 1}}                                                               
+                                        <option value="1" selected>Nhà xuất bản Kim Đồng</option>
+                                    {{else}}
+                                        <option value="1">Nhà xuất bản Kim Đồng</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Publisher 2}}                                                               
+                                        <option value="2" selected>Nhà xuất bản Giáo Dục</option>
+                                    {{else}}
+                                        <option value="2">Nhà xuất bản Giáo Dục</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Publisher 3}}                                                               
+                                        <option value="3" selected>Nhà xuất bản văn học</option>
+                                    {{else}}
+                                        <option value="3">Nhà xuất bản văn học</option>
+                                    {{/ifCond}}
+
+                                    {{#ifCond data.ID_Publisher 4}}                                                               
+                                        <option value="4" selected>Nhà xuất bản Thanh Niên</option>
+                                    {{else}}
+                                        <option value="4">Nhà xuất bản Thanh Niên</option>
+                                    {{/ifCond}}
+                                    
+                                    {{#ifCond data.ID_Publisher 5}}                                                               
+                                        <option value="5" selected>Nhà xuất bản Trẻ</option>
+                                    {{else}}
+                                        <option value="5">Nhà xuất bản Trẻ</option>
+                                    {{/ifCond}}                                                               
+                            </select>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Nhà sản xuất:</label>
-                        <div class="col-md-8">
-                              <input class="form-control" type="text"  name="producer" min="3" required>
-                        </div>
-                    </div>
-                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tồn kho:</label>
-                        <div class="col-md-8">
-                            <select class="pro-edt-select form-control-primary" name="availability">
-                                <option value="availability" >Có sẵn</option>
-                                <option value="unavailability" >Hết hàng</option>
-                              </select>
-                         </div>
-                     </div>
                     <div class="form-group">
                          <label class="col-md-3 control-label"></label>
                          <div class="col-md-8">

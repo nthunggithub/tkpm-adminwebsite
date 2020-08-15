@@ -1,6 +1,23 @@
 var multer=require('multer');
 var Stall=require("../models/Stall");
 var Product=require("../models/product");
+
+var mysql=require('mysql');
+const util = require('util');
+var db=mysql.createConnection({
+    host :  'localhost',
+    user :  'root',  
+    password : '0905172825',
+    database : 'shopping'
+  });
+  db.connect((err)=>{
+
+    if(err){
+        throw err;
+    }
+    console.log('Mysql Connected')
+})
+
 var storage=multer.diskStorage({
     destination:function(req,file,callback){
         callback(null,'./public/plugins/images');
@@ -10,80 +27,43 @@ var storage=multer.diskStorage({
     }
 });
 
+
 var upload=multer({storage:storage}).single('myfile');
 exports.postImage=async function(req,res,next){
-    if(req.body.productname===undefined)
+    if(req.body.BookName===undefined)
     {
-        upload(req,res,function(err){
+        upload(req,res,async function(err){
         if(err){
             check=false;
             errors="Cannot upload image product";
         }
         if(req.file!==undefined)
         {
+            const query = util.promisify(db.query).bind(db);
             a='../plugins/images/'+req.file.path.substring(22,req.file.path.length);
-            console.log(a);
-            Product.updateOne({_id:req.params.id},{$set:{imagePath:a}},(err,next)=> {
-             if(err)
-             {
-                 res.end('error');
-             }
-             res.redirect('/product-detail/'+ req.params.id);
-         });
+            const State = await query("UPDATE book SET imagePath = ? WHERE ID_Book = ?",[a,req.params.id]);
+            res.redirect('/product-detail/'+ req.params.id);
         }
     })
     }
     else
     {
         let check=true;
-            let a="";
-            let b="";
-            let c="";
-            let d="";
-            let e="";
-            let f="";
-            let g="";
-            if(req.body.productname.length===2)
-                a=req.body.productname[1];
-            else
-                a=req.body.productname;
+            
+            let a=req.body.BookName;
 
-            if(req.body.oldprice.length===2)
-                b=req.oldprice.price[1];
-            else
-                b=req.body.oldprice;
+            let b=req.body.Price;
 
-            if(req.body.saleoff.length===2)
-                c=req.body.saleoff[1];
-            else
-                c=req.body.saleoff;
+            let c=req.body.Publisher;
 
-            if(req.body.price.length===2)
-                d=req.body.price[1];
-            else
-                d=req.body.price;
+            let d=req.body.Category;
 
-            if(req.body.cat.length===2)
-                e=req.body.cat[1];
-            else
-                e=req.body.cat;
+            let e = req.body.Author;
 
-            f=req.body.GenderSelect;
-
-            if(req.body.producer.length===2)
-                g=req.body.producer[1];
-            else
-                g=req.body.producer;
-            console.log(a);
-            console.log(b);
-            console.log(c);
-            console.log(d);
-            console.log(e);
-            console.log(f);
-            console.log(g);
-            Product.updateOne({_id:req.params.id},{$set:{productname:a,oldprice:b,saleoff:c,price:d,cat:e,gender:f,producer:g}},(err,next)=> {
-                res.redirect('/manager-stall');
-            });
+            let f=req.body.Description;
+            const query = util.promisify(db.query).bind(db);
+            const State = await query("UPDATE book SET NameBook = ? , Price = ? , ID_Publisher = ? , ID_Category = ? , ID_Author = ?  , Description = ? WHERE ID_Book = ?",[a,b,c,d,e,f,req.params.id]);
+            res.redirect('/product-detail/'+ req.params.id);
     }
 };
 exports.AddPostProduct=async function(req,res,next)
