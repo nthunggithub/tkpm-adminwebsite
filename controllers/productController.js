@@ -193,6 +193,47 @@ exports.deleteStall = async function(req, res, next){
     res.redirect('/manager-stall');
 }
 
+exports.renderFormAddBill = async function(req,res,next)
+{
+    res.render('addBill',{errors:req.flash("FailToAddBill")})
+}
+
+exports.addBill = async function(req,res,next){
+    const query = util.promisify(db.query).bind(db);
+    var errors="";
+    var check=true;
+    var doc = await query('SELECT * FROM orders WHERE ID_Order = ?',[req.body.ID_Order]);
+    if(req.body.Name==="")
+        {
+            errors="Bạn chưa nhập tên người thu tiền";
+            check=false
+        }
+    else if(req.body.date==="")
+        {
+            errors="Bạn chưa nhập ngày thu tiền";
+            check=false;
+        }
+    else if(doc.length===0)
+        {
+            errors="ID hóa đơn không có";
+            check=false;
+        }
+    if(check===true) 
+        {
+            var sql = "INSERT INTO bill(ID_Order,DatePayment,Name) VALUES (?,?,?)";
+            try{
+                var status = await query(sql,[req.body.ID_Order,req.body.date,req.body.Name]);
+            }catch(err)
+            {
+                console.log(err);
+            }      
+            res.redirect('/BillManagement'); 
+        }
+    else{
+        req.flash("FailToAddBill", errors)
+        res.redirect('/addBill');
+    }
+}
 
 //danh sach san pham
 module.exports.products=function(req,res,next)
@@ -222,8 +263,7 @@ module.exports.DeleteBill = async function(req,res,next)
 
 //trang thong tin san pham
 module.exports.productDetail=async function(req,res,next)
-{
-    
+{    
     const query = util.promisify(db.query).bind(db);
     result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
     result2=await query('SELECT * FROM category WHERE ID_Category = ?',[result1[0].ID_Category]);
@@ -237,10 +277,10 @@ module.exports.EditProduct=async function(req,res,next)
 {
     const query = util.promisify(db.query).bind(db);
     result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
-    result2=await query('SELECT * FROM category WHERE ID_Category = ?',[result1[0].ID_Category]);
-    result3=await query('SELECT * FROM publisher WHERE ID_Publisher != ?',[result1[0].ID_Publisher]);
-    result4=await query('SELECT * FROM author WHERE ID_Author = ?',[result1[0].ID_Author]);
-    res.render('edit-product',{data:result1[0],data2:result2[0],data3:result3,data4:result4[0]});
+    result2=await query('SELECT * FROM category');
+    result3=await query('SELECT * FROM publisher');
+    result4=await query('SELECT * FROM author ');
+    res.render('edit-product',{data:result1[0],data2:result2,data3:result3,data4:result4});
 };
 
 

@@ -47,6 +47,10 @@ router.get('/BillManagement',middleware.isAuthenticated,ProductController.BillMa
 router.get('/BillDetail/:id',middleware.isAuthenticated,ProductController.BillDetail);
 
 router.post('/DeleteBill/:id',middleware.isAuthenticated,ProductController.DeleteBill);
+
+router.get('/addBill',middleware.isAuthenticated,ProductController.renderFormAddBill);
+
+router.post('/addBill',middleware.isAuthenticated,ProductController.addBill)
 //router.post('deleteproduct/:id',middleware.isAuthenticated, ProductController.deleteStall);
 
 //module.exports = router;
