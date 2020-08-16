@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="white-box">
-                    <h1 style="color:Red;font-weight:bold; font-size:30px">THÊM phiếu nhập sách</h1>
+                    <h1 style="color:Red;font-weight:bold; font-size:30px">THÊM PHIẾU NHẬP SÁCH</h1>
                      <hr>
                      <div class="row">
                     {{#if errors }}
@@ -14,12 +14,10 @@
                <form class="form-horizontal" method="post">
                    {{#each data}}
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên sách: {{NameBook}}</label>
+                        <label class="col-md-8 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">{{NameBook}}</label>
+                              <label class="col-md-8 control-label" style="coloR:black;font-weight:bold; font-size:20px">Nhập số lượng</label>
                         <div class="col-md-8">
-                              <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Nhập số lượng</label>
-                        </div>                        
-                        <div class="col-md-8">
-                              <input class="form-control" type="number" name={{ID_Book}} min={{Quantity_Book}}>
+                              <input class="form-control" type="number" name={{ID_Book}} >
                         </div>
                     </div>
                     {{/each}}

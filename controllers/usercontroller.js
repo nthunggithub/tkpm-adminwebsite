@@ -9,16 +9,16 @@ const util = require('util');
 var db=mysql.createConnection({
     host :  'localhost',
     user :  'root',  
-    password : '0905172825',
+    password : 'khiemkhiem841999',
     database : 'shopping'
   });
   db.connect((err)=>{
-
+  
     if(err){
         throw err;
     }
     console.log('Mysql Connected')
-})
+  })
 //dang ky
 module.exports.signup = function (req, res, next) {
     res.render('account/sign-up', { layout: 'layout-account.hbs', success: req.session.success, errors: req.session.errors });

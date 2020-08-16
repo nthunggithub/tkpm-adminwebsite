@@ -16,11 +16,6 @@ var expressSession =require("express-session");
 require("./config/passport");
 require("./config/handlebars");
 var app = express();
-//mongoose.connect('mongodb://localhost/shopping');
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'hbs');
-//app.engine('handlebars', exphbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 app.engine( 'hbs', exphbs( {

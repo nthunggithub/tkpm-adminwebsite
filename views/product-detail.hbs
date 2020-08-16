@@ -1,32 +1,25 @@
-
 <body>
      <div class="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="white-box">
-                            <a href="/edit-product/{{data.ID_Book}}" class="btn btn-primary">CHỈNH SỬA</a>
-                            <form action="#" method="">
-                                <div class="form-group">
-                                    <input type="text" value="{{data.ID_Book}}" hidden name="iddelete">
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">Xóa</button>
-                                </div>
-                            </form>
-                            
                             <hr>
                             <div class="row">
                                 <div class="col-md-4 col-sm-6">
                                     <div class="white-box text-center">
-                                        <img src="/{{data.imagePath}}" width="300px" id="product-image" class="img-responsive" />
+                                        <img src="{{data.imagePath}}" width="300px" id="product-image" class="img-responsive" />
                                     </div>
                                     <div class="clear"></div>
                                 </div>
                                 <div class="col-md-8 col-sm-6">
-                                    <h4 class="box-title m-t-0" style="color:red; font-weight:bold; font-size:35px">{{data.productname}}</h4>
-                                    <h5 class="box-title m-t-0" style="color:orange; font-weight:bold; font-size:20px" >Mô tả: {{data.Description}}</h5>
-                                    <h5 class="box-title m-t-0" style="color:orange; font-weight:bold; font-size:20px" >Gía: {{data.Price}}</h5>
+                                    <h4 class="box-title m-t-0" style="color:red; font-weight:bold; font-size:35px">{{data.NameBook}}</h4>
+                                    <h5 class="box-title m-t-0" style="color:black; font-weight:bold; font-size:20px" >Giá: {{data.Price}}</h5>
+                                    <h5 class="box-title m-t-0" style="color:black; font-weight:bold; font-size:20px" >Khuyến mãi: {{data.Discount}}%</h5>
+                                    <h5 class="box-title m-t-0" style="color:black; font-weight:bold; font-size:20px" >Thể loại: {{data2.NameCategory}}</h5>
+                                    <h5 class="box-title m-t-0" style="color:black; font-weight:bold; font-size:20px" >Tác giả: {{data4.NameAuthor}}</h5>
+                                    <h5 class="box-title m-t-0" style="color:black; font-weight:bold; font-size:20px" >Nhà xuất bản: {{data3.NamePublisher}}</h5>
+                                    <h5 class="box-title m-t-0" style="color:black; font-weight:bold; font-size:20px" >Số lượng tồn: {{data.Quantity_Book}}</h5>
                                     <hr>
                                     <p>{{data.Description}}</p>
                                     <div class="row">
@@ -39,52 +32,18 @@
                                                     <li class="purple active"></li>
                                                 </ul>
                                             </div>
-                                            <h6 class="m-t-20">Available Size</h6>
-                                            <p>
-                                                <span class="label label-rounded label-default text-dark">S</span>
-                                                <span class="label label-rounded label-default text-dark">M</span>
-                                                <span class="label label-rounded label-default text-dark">L</span>
-                                            </p>
                                         </div>
                                     </div>
                                     <hr>
-
-                                    <h3 class="box-title m-t-40">Key Highlights</h3>
-                                    <ul class="list-icons">
-                                        <li><i class="fa fa-check text-success"></i> Sturdy structure</li>
-                                        <li><i class="fa fa-check text-success"></i> Designed to foster easy portability</li>
-                                        <li><i class="fa fa-check text-success"></i> Perfect furniture to flaunt your wonderful collectibles</li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h3 class="box-title m-t-40" style="color:blue;font-weight:bold; font-size:30px">Thông tin sản phẩm</h3>
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">Giá gốc</td>
-                                                    <td> {{data.Price}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Loại</td>
-                                                    <td> {{data2.NameCategory}} </td>
-                                                </tr>
-                                                
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Nhà xuất bản</td>
-                                                    <td> {{data3.NamePublisher}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Tác giả</td>
-                                                    <td>{{data4.NameAuthor}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color:black;font-weight:bold; font-size:20px">Tồn kho</td>
-                                                    <td> {{data.Quantity_Book}} </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                     <a href="/edit-product/{{data.ID_Book}}" class="btn btn-block btn-primary">Chỉnh sửa</a>
+                                    <form action="#" method="">
+                                        <div class="form-group">
+                                            <input type="text" value="{{data.ID_Book}}" hidden name="iddelete">
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-block btn-primary" type="submit">Xóa</button>
+                                         </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -154,6 +113,4 @@
                 </div>
                 <!-- ===== Right-Sidebar-End ===== -->
             </div>
-            <!-- /.container-fluid -->
-           
         </div>

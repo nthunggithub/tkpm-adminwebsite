@@ -9,16 +9,16 @@ const { query } = require("express");
 var db=mysql.createConnection({
     host :  'localhost',
     user :  'root',  
-    password : '0905172825',
+    password : 'khiemkhiem841999',
     database : 'shopping'
   });
   db.connect((err)=>{
-
+  
     if(err){
         throw err;
     }
     console.log('Mysql Connected')
-})
+  })
 
 module.exports.deleteproduct= async function(req,res,next){
         const id=req.params.id;
@@ -62,7 +62,7 @@ module.exports.Index=async function(req,res,next){
        if(Month>=(Quarter-1)*3+1&&Month<=(Quarter-1)*3+3 && currentdate.getFullYear()===Year)
            RevenueQuarter+=data[i].Amount
        if(currentdate.getDate()===Day&&currentdate.getFullYear()===Year&&currentdate.getMonth()+1===Month)
-           RevenueDay+=data[i].cart.Amount;
+           RevenueDay+=data[i].Amount;
    }   
     res.render('index', { title: 'Express',data:products,RevenueQuarter:RevenueQuarter,RevenueDay:RevenueDay,RevenueMonth:RevenueMonth,RevenueYear:RevenueYear,Day:currentdate.getDate(),Quarter:Quarter,Month:currentdate.getMonth()+1,Year:currentdate.getFullYear()});
 };
@@ -228,9 +228,10 @@ module.exports.BookEntryManagement=async function(req,res,next){
     const query = util.promisify(db.query).bind(db);
     var perpage=10;
     var page=req.query.Page||1;
-    var offset = page*(page-1);
+    var offset = perpage*(page-1);
+    var data2=await query('SELECT * FROM bookentry');
     var data =await query('SELECT * FROM bookentry Limit ? OFFSET ?',[perpage,offset]);
-    res.render('BookEntryManagement',{data:data,currentpage:page,total_page:Math.ceil(data.length/perpage)});
+    res.render('BookEntryManagement',{data:data,currentpage:page,total_page:Math.ceil(data2.length/perpage)});
 }
 module.exports.BookEntryDetail=async function(req,res,next){
     const query=util.promisify(db.query).bind(db);
@@ -268,7 +269,7 @@ module.exports.AddBookEntry2=async function(req,res,next)
     var data = await query('INSERT INTO bookentry(ID_Admin,DateCreated) VALUES (?,?)',[req.user.ID_Admin,d]);
     for(i =0 ;i<result.length;i++)
     {
-        if(req.body[result[i].ID_Book]!=="")
+        if(req.body[result[i].ID_Book]!=="" & req.body[result[i].ID_Book!==undefined])
             {
                 check=true;
                 var status = await query('INSERT INTO detail_bookentry(ID_BookEntry,ID_Book,Quantity) VALUES (?,?,?)',[data.insertId,result[i].ID_Book,req.body[result[i].ID_Book]])
@@ -296,8 +297,12 @@ module.exports.EditBill= async function(req,res,next)
 }
 
 //Them mot san pham
-module.exports.addProduct=function(req,res,next)
+module.exports.addProduct=async function(req,res,next)
 {
-    res.render('addProduct', {errors : req.flash("errorsaddProduct")});
+    const query = util.promisify(db.query).bind(db);
+    var data2=await query('SELECT * FROM category');
+    var data1=await query('SELECT * FROM author');
+    var data3=await query('SELECT * FROM publisher')
+    res.render('addProduct', {data1:data1,data2:data2,data3:data3,errors : req.flash("errorsaddProduct")});
 };
 
