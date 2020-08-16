@@ -153,10 +153,11 @@ module.exports.ManagerUser = async function (req, res, next) {
 
     const query = util.promisify(db.query).bind(db);
     let perpage=10;
-    let Page=req.query.page||1;
-    let offset=10*(Page-1);
+    let page=req.query.page||1;
+    let offset=10*(page-1);
+    var data2=await query('SELECT * FROM customer');
     var data=await query('SELECT * FROM customer Limit ? OFFSET ?',[perpage,offset]);
-    res.render('manager-user',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
+    res.render('manager-user',{data:data,currentpage:page,total_page:Math.ceil(data2.length/perpage)});
     
 };
 

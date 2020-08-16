@@ -71,21 +71,23 @@ module.exports.managementOrder=async function(req,res,next)
 {
     const query = util.promisify(db.query).bind(db);
     var perpage=10;
-    var Page=req.query.page||1;
-    var offset=10*(Page-1);
+    var page=req.query.page||1;
+    var offset=10*(page-1);
     var sql ='SELECT * FROM orders Limit ? OFFSET ?';
+    var data2=await query('SELECT * FROM orders');
     const data=await query(sql,[perpage,offset]);
-    res.render('manager-order',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
+    res.render('manager-order',{data:data,currentpage:page,total_page:Math.ceil(data2.length/perpage)});
 };
 
 module.exports.managerBook=async function(req,res,next){
 
     const query = util.promisify(db.query).bind(db);
     var perpage=10;
-    var Page=req.query.page||1;
-    var offset=10*(Page-1);
+    var page=req.query.page||1;
+    var offset=10*(page-1);
+    var data2=await query('SELECT * FROM book');
     var data=await query('SELECT * FROM book Limit ? OFFSET ?',[perpage,offset]);
-    res.render('BookManagement',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
+    res.render('BookManagement',{data:data,currentpage:page,total_page:Math.ceil(data2.length/perpage)});
     
 }
 
@@ -122,8 +124,9 @@ exports.BillManagement=async function(req,res,next){
     var perpage=10;
     var page=req.query.page||1;
     var offset=10*(page-1);
+    var data2=await query('SELECT * FROM bill');
     var data=await query('SELECT * FROM bill Limit ? OFFSET ?',[perpage,offset]);
-    res.render('BillManagement',{data:data,currentpage:page,total_page:Math.ceil(data.length/perpage)});
+    res.render('BillManagement',{data:data,currentpage:page,total_page:Math.ceil(data2.length/perpage)});
 
 }
 exports.BillDetail=async function(req,res,next){
@@ -227,7 +230,7 @@ module.exports.productDetail=async function(req,res,next)
 module.exports.BookEntryManagement=async function(req,res,next){
     const query = util.promisify(db.query).bind(db);
     var perpage=10;
-    var page=req.query.Page||1;
+    var page=req.query.page||1;
     var offset = perpage*(page-1);
     var data2=await query('SELECT * FROM bookentry');
     var data =await query('SELECT * FROM bookentry Limit ? OFFSET ?',[perpage,offset]);
