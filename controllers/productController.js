@@ -5,6 +5,7 @@ var Order=require("../models/Order");
 var Stall=require("../models/Stall");
 var mysql=require('mysql');
 const util = require('util');
+const { query } = require("express");
 var db=mysql.createConnection({
     host :  'localhost',
     user :  'root',  
@@ -54,34 +55,16 @@ module.exports.Index=async function(req,res,next){
         var mod=(currentdate.getMonth()+1)%3;
         if(mod>0)
             Quarter++;
-       if(String(currentdate.getFullYear())===Year)
+       if(currentdate.getFullYear()===Year)
            RevenueYear+=data[i].Amount;
-       if(String(currentdate.getMonth()+1)===Month&&String(currentdate.getFullYear())===Year)
+       if((currentdate.getMonth()+1)===Month&&currentdate.getFullYear()===Year)
            RevenueMonth+=data[i].Amount;
-       if(parseInt(Month)>=(Quarter-1)*3+1&&parseInt(Month)<=(Quarter-1)*3+3)
+       if(Month>=(Quarter-1)*3+1&&Month<=(Quarter-1)*3+3 && currentdate.getFullYear()===Year)
            RevenueQuarter+=data[i].Amount
-       if(String(currentdate.getDate())===Day&&String(currentdate.getFullYear()===Year)&&String(currentdate.getMonth()+1===Month))
+       if(currentdate.getDate()===Day&&currentdate.getFullYear()===Year&&currentdate.getMonth()+1===Month)
            RevenueDay+=data[i].cart.Amount;
    }   
     res.render('index', { title: 'Express',data:products,RevenueQuarter:RevenueQuarter,RevenueDay:RevenueDay,RevenueMonth:RevenueMonth,RevenueYear:RevenueYear,Day:currentdate.getDate(),Quarter:Quarter,Month:currentdate.getMonth()+1,Year:currentdate.getFullYear()});
-};
-module.exports.StallDetail= async function(req,res,next)
-{
-    let result =  await  Stall.findOne({_id:req.params.id});
-    let result2=await Product.find({IDSTall:req.params.id}).limit(10).sort({qtysold:-1});
-    const perpage=5;
-    let page=req.query.page||1;
-    Product.find({IDSTall:req.params.id}).skip(perpage*(page-1)).limit(perpage).exec((err,data)=>{
-        Product.find({IDSTall: req.params.id}).count().exec((err,count)=>{
-            if(err)
-            {
-                throw(err);
-            }
-            else
-            {
-                res.render("stall-detail",{data:data,top10:result2,doc:result,currentpage:page,total_page:Math.ceil(count/perpage)});
-            }})
-    })
 };
 //danh sach don dat hang
 module.exports.managementOrder=async function(req,res,next)
@@ -94,12 +77,6 @@ module.exports.managementOrder=async function(req,res,next)
     const data=await query(sql,[perpage,offset]);
     res.render('manager-order',{data:data,currentpage:Page,total_page:Math.ceil(data.length/perpage)});
 };
-module.exports.managerStall=async function(req,res,next){
-
-    var stall=Stall.find((err,data)=>{
-        res.render('manager-stall',{data:data});
-    })
-}
 
 module.exports.managerBook=async function(req,res,next){
 
@@ -140,30 +117,6 @@ exports.UpdateStatus=function(req,res,next)
     var status=query('UPDATE orders SET Status = ? ',[req.body.StatusSelect]);
    res.redirect("/UpdateOrder/"+req.params.id);
 };
-module.exports.AddStall1=function(req,res,next){
-    res.render('addStall');
-}
-exports.AddStall=async function(req,res,next){
-    let check=true;
-    let errors="";
-    if(req.body.name==="")
-    {
-        check=false;
-        errors="Bạn chưa nhập tên gian hàng";
-    }
-    if(check===true)
-    {
-        var stall=new Stall();
-        let date=new Date();
-        stall.date= date.getDate()+'/'+ (date.getMonth() +1) + '/' + date.getFullYear();
-        stall.name=req.body.stallname;
-        console.log(stall);
-        await stall.save((err,next)=>{
-            res.redirect('manager-stall');
-        });
-    }
-}
-
 exports.BillManagement=async function(req,res,next){
     const query = util.promisify(db.query).bind(db);
     var perpage=10;
@@ -176,7 +129,13 @@ exports.BillManagement=async function(req,res,next){
 exports.BillDetail=async function(req,res,next){
     const query = util.promisify(db.query).bind(db);
     var data=await query('SELECT * FROM bill WHERE ID_Bill = ?',[req.params.id]);
-    res.render('BillDetail',{data:data[0]});
+    var month = (1 + data[0].DatePayment.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+
+    var day = data[0].DatePayment.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;  
+    var birthday=(data[0].DatePayment.getYear()+1900).toString()+'-'+month+'-'+day;
+    res.render('BillDetail',{data:data[0],birthday:birthday,errors:req.flash("FailToEditBill")});
 }
 exports.deleteOrder= async function(req,res,next){
     const query = util.promisify(db.query).bind(db);
@@ -184,13 +143,6 @@ exports.deleteOrder= async function(req,res,next){
     var status2=await query('DELETE FROM detail_order WHERE ID_Order = ?',req.params.id);
     var status3= await query('DELETE FROM orders WHERE ID_Order = ?',req.params.id);
     res.redirect('/manager-order');
-}
-
-exports.deleteStall = async function(req, res, next){
-    var idstall = req.params.id;
-    await Stall.deleteOne({_id: idstall});
-    await Product.deleteMany({IDSTall : idstall});
-    res.redirect('/manager-stall');
 }
 
 exports.renderFormAddBill = async function(req,res,next)
@@ -272,6 +224,20 @@ module.exports.productDetail=async function(req,res,next)
     res.render('product-detail',{data:result1[0],data2:result2[0],data3:result3[0],data4:result4[0]});
 };
 
+module.exports.BookEntryManagement=async function(req,res,next){
+    const query = util.promisify(db.query).bind(db);
+    var perpage=10;
+    var page=req.query.Page||1;
+    var offset = page*(page-1);
+    var data =await query('SELECT * FROM bookentry Limit ? OFFSET ?',[perpage,offset]);
+    res.render('BookEntryManagement',{data:data,currentpage:page,total_page:Math.ceil(data.length/perpage)});
+}
+module.exports.BookEntryDetail=async function(req,res,next){
+    const query=util.promisify(db.query).bind(db);
+    var data=await query('SELECT * FROM bookentry WHERE ID_BookEntry = ?',[req.params.id]);
+    var data2=await query('SELECT db.Quantity,b.NameBook FROM detail_bookentry as db INNER JOIN book as b WHERE db.ID_BookEntry= ? AND db.ID_Book=b.ID_Book',[req.params.id]);
+    res.render('BookEntryDetail',{data:data[0],data2:data2});
+}
 //Lay thong tin san pham
 module.exports.EditProduct=async function(req,res,next)
 {
@@ -283,7 +249,51 @@ module.exports.EditProduct=async function(req,res,next)
     res.render('edit-product',{data:result1[0],data2:result2,data3:result3,data4:result4});
 };
 
+module.exports.AddBookEntry=async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var Perpage=10;
+    var page=req.query.page||1
+    var offset=Perpage*(page-1);
+    result1=await query('SELECT * FROM book Limit ? OFFSET ?',[Perpage,offset]);
+    res.render('AddBookEntry',{data:result1,currentpage:page,total_page:Math.ceil(result1.length/Perpage)});
+}
 
+module.exports.AddBookEntry2=async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var result=await query('SELECT * FROM book');
+    check=false;
+    var d=new Date();
+    var data = await query('INSERT INTO bookentry(ID_Admin,DateCreated) VALUES (?,?)',[req.user.ID_Admin,d]);
+    for(i =0 ;i<result.length;i++)
+    {
+        if(req.body[result[i].ID_Book]!=="")
+            {
+                check=true;
+                var status = await query('INSERT INTO detail_bookentry(ID_BookEntry,ID_Book,Quantity) VALUES (?,?,?)',[data.insertId,result[i].ID_Book,req.body[result[i].ID_Book]])
+            }
+    }
+    res.redirect('/BookEntryManagement');
+}
+
+module.exports.EditBill= async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var ID_Order=req.body.ID_Order;
+    var errors="";
+    var data = await query("SELECT * FROM orders WHERE ID_Order = ?",[ID_Order]);
+    if(data.length===0)
+    {
+        errors="ID Order ko tồn tại";
+        req.flash("FailToEditBill",errors);
+        res.redirect('/BillDetail/'+req.params.id);
+    }
+    else{
+        var status = await query("UPDATE bill SET ID_Order = ? , DatePayment = ? ,Name = ?",[ID_Order,req.body.date,req.body.name]);
+        res.redirect('/BillDetail/'+req.params.id);
+    }
+}
 
 //Them mot san pham
 module.exports.addProduct=function(req,res,next)

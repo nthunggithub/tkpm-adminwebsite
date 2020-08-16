@@ -16,10 +16,7 @@ var expressSession =require("express-session");
 require("./config/passport");
 require("./config/handlebars");
 var app = express();
-
-var mongoose = require('mongoose');
 //mongoose.connect('mongodb://localhost/shopping');
-mongoose.connect("mongodb+srv://admin:adminpassword@tanhung-o7d5l.mongodb.net/shopping?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'hbs');

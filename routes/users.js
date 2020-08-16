@@ -11,13 +11,11 @@ router.get('/logout',middleware.isAuthenticated, UserController.logout);
 
 router.get('/manager-user',middleware.isAuthenticated, UserController.ManagerUser);
 
-router.get('/profile-edit/:id',middleware.isAuthenticated, UserController.getProfile);
-
-router.post('/profile-edit/:id',middleware.isAuthenticated, UserController.EditProfile);
-
 router.post('/edit-customer-profile/:id',middleware.isAuthenticated, UserController.editProfileCustomer);
 
 router.get('/edit-customer-profile/:id',middleware.isAuthenticated, UserController.editCustomer);
+
+router.post('/DeleteCustomer/:id',middleware.isAuthenticated, UserController.DeleteCustomer);
 
 
 module.exports = router;

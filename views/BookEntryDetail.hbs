@@ -1,0 +1,45 @@
+
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                      <h1 style="color:red; font-weight:bold; font-size:35px">Chi tiết phiếu nhập sách </h1>
+                      <hr>
+                      <div class="row">
+                      <div class="col-md-9 personal-info">
+                          <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">ID phiếu nhập sách:</td>
+                                                    <td> {{data.ID_BookEntry}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">ID Admin:</td>
+                                                    <td> {{data.ID_Admin}} </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">Ngày lập:</td>
+                                                    <td> {{data.DateCreated}} </td>
+                                                </tr>
+                                                {{#each data2}}
+                                                <tr>                                                    
+                                                        <td width="390" style="color:black;font-weight:bold; font-size:20px">Tên sách :</td>
+                                                        <td> {{NameBook}} </td>
+                                                        <td width="390" style="color:black;font-weight:bold; font-size:20px">Số lượng :</td>
+                                                        <td> {{Quantity}} </td>
+                                                </tr>
+                                                {{/each}}                                     
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                        
+                        </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

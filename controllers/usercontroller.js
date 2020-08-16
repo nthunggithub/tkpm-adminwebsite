@@ -103,83 +103,13 @@ module.exports.login = function (req, res, next) {
 };
 
 //chinh sua thong tin ca nhan
-exports.EditProfile = async function (req, res, next) {
 
-    let check = true;
-    let temp = true;
-    let indexNewUser = ""
-    if (req.body.username.length === 2) {
-        indexNewUser = req.body.username[1];
-        let result = await User.findOne({ username: indexNewUser });
-        if (result) {
-            check = false;
-            errors = "Tên tài khoản đã tồn tại";
-        }
-    }
-    else
-        indexNewUser = req.body.username;
-    let result2 = await User.findOne({ username: req.params.id });
-    const match = await bcrypt.compareSync(req.body.oldpassword, result2.password);
-    if (match === false) {
-        check = false;
-        errors = "Mật khẩu xác nhận không đúng";
-    }
-
-    let a = "";
-    let b = "";
-    let c = "";
-    let d = "";
-    let e = "";
-    if (req.body.username.length == 2)
-        a = req.body.username[1];
-    else
-        a = req.body.username;
-    if (req.body.password.length == 2)
-        b = req.body.password[1];
-    else
-        b = req.body.password;
-    if (req.body.firstname.length == 2)
-        c = req.body.firstname[1];
-    else
-        c = req.body.firstname;
-    if (req.body.lastname.length == 2)
-        d = req.body.lastname[1];
-    else
-        d = req.body.lastname;
-    if (req.body.email.length == 2)
-        e = req.body.email[1];
-    else
-        e = req.body.email;
-    b = bcrypt.hashSync(b, bcrypt.genSaltSync(10));
-
-
-    if (check === true) {
-        User.updateOne({ username: req.params.id }, { $set: { username: a, password: b, firstname: c, lastname: d, email: e } }, (err, next) => {
-            res.redirect('/');
-        })
-    }
-    else {
-        console.log(errors);
-        var product = User.findOne({ username: req.params.id }, (err, data) => {
-            res.render("profile-edit", { data: data, errors: errors });
-        });
-    }
-};
 
 //lay thong tin ca nhan
-module.exports.getProfile = function (req, res, next) {
-    console.log(req.params.id);
-    var product = User.findOne({ username: req.params.id }, (err, data) => {
-        res.render("profile-edit", { data: data });
-    });
-};
+
 
 //lay thong tin ca nhan
-module.exports.getProfile = function (req, res, next) {
-    var product = User.findOne({ username: req.params.id }, (err, data) => {
-        res.render("profile-edit", { data: data });
-    });
-};
+
 
 // Khóa/Mở khóa tài khoản khách hàng
 exports.editProfileCustomer = async function (req, res, next) {
@@ -202,6 +132,21 @@ module.exports.editCustomer = async function (req, res, next) {
     var birthday=(data[0].Birthday.getYear()+1900).toString()+'-'+month+'-'+day;
     res.render("edit-customer-profile",{data:data[0],BornDay:birthday});
 };
+
+module.exports.DeleteCustomer=async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var status = await query('DELETE FROM comment WHERE ID_Customer = ?',[req.params.id]);
+    var status0=await query('DELETE FROM customer WHERE ID_Customer = ?',[req.params.id]);
+    var data = await query('SELECT * FROM orders WHERE ID_Customer = ?',[req.params.id]);
+    var status2= await query('DELETE FROM orders WHERE ID_Customer = ?',[req.params.id]);
+    if(data.length>0)
+    {
+        var status3=await query('DELETE FROM detail_order WHERE ID_Order =?',[data[0].ID_Order]);
+        var status4=await query('DELETE FROM bill WHERE ID_Order=?',[data[0].ID_Order]);
+    }
+    res.redirect('/manager-user');
+}
 
 //danh sach khach hang
 module.exports.ManagerUser = async function (req, res, next) {

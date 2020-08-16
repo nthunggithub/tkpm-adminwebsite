@@ -1,22 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var ProductController=require('../controllers/productController');
+var UserController=require('../controllers/usercontroller');
 var Upload=require('../config/UploadFile');
 var middleware = require('../config/middleware');
 /* GET home page. */
 router.get('/', middleware.isAuthenticated, ProductController.Index);
 
-router.get('/stall-detail/:id',middleware.isAuthenticated,ProductController.StallDetail);
-
 router.get('/BookManagement',middleware.isAuthenticated,ProductController.managerBook);
-
-router.post('/stall-detail/:id', middleware.isAuthenticated, ProductController.deleteStall);
-
-router.get('/addStall',middleware.isAuthenticated,ProductController.AddStall1);
-
-router.post('/addStall',middleware.isAuthenticated,ProductController.AddStall);
-
-router.get('/manager-stall',middleware.isAuthenticated,ProductController.managerStall);
 
 router.get('/manager-order',middleware.isAuthenticated,ProductController.managementOrder);
 
@@ -51,7 +42,17 @@ router.post('/DeleteBill/:id',middleware.isAuthenticated,ProductController.Delet
 router.get('/addBill',middleware.isAuthenticated,ProductController.renderFormAddBill);
 
 router.post('/addBill',middleware.isAuthenticated,ProductController.addBill)
-//router.post('deleteproduct/:id',middleware.isAuthenticated, ProductController.deleteStall);
+
+router.post('/BillDetail/:id',middleware.isAuthenticated,ProductController.EditBill)
+
+router.get('/BookEntryManagement',middleware.isAuthenticated,ProductController.BookEntryManagement);
+
+router.get('/BookEntryDetail/:id',middleware.isAuthenticated,ProductController.BookEntryDetail);
+
+
+router.get('/AddBookEntry',middleware.isAuthenticated,ProductController.AddBookEntry);
+
+router.post('/AddBookEntry',middleware.isAuthenticated,ProductController.AddBookEntry2);
 
 //module.exports = router;
 module.exports = function (passport) {

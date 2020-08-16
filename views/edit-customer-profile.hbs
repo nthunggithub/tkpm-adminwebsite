@@ -16,7 +16,11 @@
                                    <h4>{{errors}}</h4>
                                 {{/if}}
                              </div>
-
+                            <form action="/DeleteCustomer/{{data.ID_Customer}}" method="post">
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Xóa</button>
+                                </div>
+                            </form>
                             <form class="form-horizontal" method="post">
                                 <div class="form-group">
                                     <label class="col-lg-3 control-label" style="color:blue;font-weight:bold; font-size:20px">Tên tài khoản:</label>

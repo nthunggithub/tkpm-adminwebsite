@@ -1,50 +1,61 @@
+<link rel="stylesheet" href="css/mystyle.css">
+
 
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <div class="white-box">
-                      <h1 style="color:red; font-weight:bold; font-size:35px">Chi tiết phiếu thu tiền </h1>
-                      <hr>
-                      <div class="row">
-                      <div class="col-md-9 personal-info">
-                          <div class="table-responsive">
-                                        <table class="table">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">ID phiếu thu tiền:</td>
-                                                    <td> {{data.ID_Bill}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">ID hóa đơn:</td>
-                                                    <td> {{data.ID_Order}} </td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">Ngày lập:</td>
-                                                    <td> {{data.DatePayment}} </td>
-                                                </tr>
-                                                 <tr>
-                                                    <td width="390" style="color:black;font-weight:bold; font-size:20px">Người thu tiền:</td>
-                                                    <td> {{data.Name}} </td>
-                                                </tr>                                       
-                                                <form action="/DeleteBill/{{data.ID_Order}}" method="post">
-                                                    <div class="form-group">
-                                                        <tr>
-                                                             <td><div class="col-md-12">
-                                                                     <button class="btn btn-block btn-primary" type="submit">Xóa</button>
-                                                                 </div>
-                                                             </td>
-                                                        </tr>
-                                                    </div>
-                                                </form>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                        
+                    <h1 style="color:Red;font-weight:bold; font-size:30px">Chi tiết phiếu thu tiền</h1>
+                     <hr>
+                     <div class="row">
+                    {{# if errors }}
+                         <h4>{{errors}}</h4>
+                     {{/if}}
+                    </div>
+
+               <form class="form-horizontal" method="post">
+                    <div class="form-group">
+                         <label class="col-lg-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">ID_Bill :</label>
+                         <div class="col-lg-8">
+                              <input class="form-control" type="text"  name="ID_Bill" value="{{data.ID_Bill}}" readonly>
+                         </div>
+                     </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">ID_Order:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="number"  name="ID_Order" value="{{data.ID_Order}}">
                         </div>
-                  </div>
-            </div>
-        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Ngày Tạo:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="date" name="date"  min="2010-08-07" value="{{birthday}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên người thu tiền:</label>
+                        <div class="col-md-8">
+                              <input class="form-control" type="text" name="name"  min="2010-08-07" value="{{data.Name}}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                         <label class="col-md-3 control-label"></label>
+                         <div class="col-md-8">
+                            <button class="btn btn-block btn-primary" type="submit">Chỉnh sửa</button>
+                        </div>
+                    </div>
+                </form>
+                <form action="/DeleteBill/{{data.ID_Bill}}" method="post">
+                                <div class="form-group">
+                                    <input type="text" value="{{data.ID_Book}}" hidden name="iddelete">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Xóa</button>
+                                </div>
+                </form>
+             </div>
+         </div>
     </div>
 </div>
-</div>
+

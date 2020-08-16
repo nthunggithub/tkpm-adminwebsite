@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="css/mystyle.css">
+<div class="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="white-box">
+                    <h1 style="color:Red;font-weight:bold; font-size:30px">THÊM phiếu nhập sách</h1>
+                     <hr>
+                     <div class="row">
+                    {{#if errors }}
+                        <h4 class="text-center text-danger">{{errors}}</h4>
+                    {{/if}}
+                    </div>
+               <form class="form-horizontal" method="post">
+                   {{#each data}}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Tên sách: {{NameBook}}</label>
+                        <div class="col-md-8">
+                              <label class="col-md-3 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">Nhập số lượng</label>
+                        </div>                        
+                        <div class="col-md-8">
+                              <input class="form-control" type="number" name={{ID_Book}} min={{Quantity_Book}}>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <div class="clearfix">
+                    <ul class="pagination">
+                        {{#for total_page}}
+                            {{#ifCond currentpage @index}}
+                                <li   class="page-item active"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{else}}
+                                <li   class="page-item"><a href="?page={{@index}}" >{{@index}}</a></li>
+                            {{/ifCond}}
+                        {{/for}}
+                    </ul>
+                    </div>
+                    <div class="form-group">
+                         <label class="col-md-3 control-label"></label>
+                         <div class="col-md-8">
+                            <button class="btn btn-block btn-primary" type="submit">THÊM</button>
+                        </div>
+                    </div>
+                </form>
+             </div>
+         </div>
+    </div>
+</div>
+
+
+
