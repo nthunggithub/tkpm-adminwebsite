@@ -48,9 +48,9 @@ class book
        var Month=data[i].DateCreated.getMonth()+1;
        var Year=data[i].DateCreated.getFullYear();
         var currentdate=new Date();
-        var currentDay=currentDate.getDate();
-        var currentMonth=currentDate.getMonth()+1;
-        var currentYear=currentDate.getFullYear();
+        var currentDay=currentdate.getDate();
+        var currentMonth=currentdate.getMonth()+1;
+        var currentYear=currentdate.getFullYear();
         var Quarter=Math.floor((currentdate.getMonth()+1)/3);
         console.log(Quarter);
         var mod=(currentdate.getMonth()+1)%3;
