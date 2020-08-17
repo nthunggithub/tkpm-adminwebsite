@@ -6,19 +6,7 @@ var Stall=require("../models/Stall");
 var mysql=require('mysql');
 const util = require('util');
 const { query } = require("express");
-var db=mysql.createConnection({
-    host :  'localhost',
-    user :  'root',  
-    password : '0905172825',
-    database : 'shopping'
-  });
-  db.connect((err)=>{
-
-    if(err){
-        throw err;
-    }
-    console.log('Mysql Connected')
-})
+var db =require('../models/db');
 
 module.exports.deleteproduct= async function(req,res,next){
         const id=req.params.id;

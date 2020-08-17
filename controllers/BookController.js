@@ -20,10 +20,10 @@ class book
     static async EditProduct(req,res,next)
     {
         const query = util.promisify(db.query).bind(db);
-        result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
-        result2=await query('SELECT * FROM category');
-        result3=await query('SELECT * FROM publisher');
-        result4=await query('SELECT * FROM author ');
+        var result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
+        var result2=await query('SELECT * FROM category');
+        var result3=await query('SELECT * FROM publisher');
+        var result4=await query('SELECT * FROM author ');
         res.render('edit-product',{data:result1[0],data2:result2,data3:result3,data4:result4});
     }
     static async ThongKe(req,res,next)
@@ -70,10 +70,10 @@ class book
     static async productDetail(req,res,next)
     {
         const query = util.promisify(db.query).bind(db);
-        result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
-        result2=await query('SELECT * FROM category WHERE ID_Category = ?',[result1[0].ID_Category]);
-        result3=await query('SELECT * FROM publisher WHERE ID_Publisher = ?',[result1[0].ID_Publisher]);
-        result4=await query('SELECT * FROM author WHERE ID_Author = ?',[result1[0].ID_Author]);
+        var result1=await query('SELECT * FROM book WHERE ID_Book = ?',[req.params.id]);
+        var result2=await query('SELECT * FROM category WHERE ID_Category = ?',[result1[0].ID_Category]);
+        var result3=await query('SELECT * FROM publisher WHERE ID_Publisher = ?',[result1[0].ID_Publisher]);
+        var result4=await query('SELECT * FROM author WHERE ID_Author = ?',[result1[0].ID_Author]);
         res.render('product-detail',{data:result1[0],data2:result2[0],data3:result3[0],data4:result4[0]});
     }
 }

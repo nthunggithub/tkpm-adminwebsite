@@ -62,7 +62,7 @@ exports.postImage=async function(req,res,next){
 
             let f=req.body.Description;
             const query = util.promisify(db.query).bind(db);
-            const State = await query("UPDATE book SET NameBook = ? , Price = ? , ID_Publisher = ? , ID_Category = ? , ID_Author = ?  , Description = ? WHERE ID_Book = ?",[a,b,c,d,e,f,req.params.id]);
+            const State = await query("UPDATE book SET NameBook = ? , Price = ? , ID_Publisher = ? , ID_Category = ? , ID_Author = ?  , Description = ? , Discount = ? WHERE ID_Book = ?",[a,b,c,d,e,f,req.body.Discount,req.params.id]);
             res.redirect('/product-detail/'+ req.params.id);
     }
 };
@@ -95,8 +95,8 @@ exports.AddPostProduct=async function(req,res,next)
             if(check===true)
             {
                 const query = util.promisify(db.query).bind(db);
-                let sql ="INSERT INTO book(NameBook,ID_Category,Price,ID_Author,ID_Publisher,Quantity_Book,Description,imagePath) VALUES (?,?,?,?,?,?,?,?)";
-                let values=[req.body.BookName,req.body.Category,req.body.Price,req.body.Author,req.body.Publisher,req.body.Quantity,req.body.Description,'../plugins/images/default.jpg'];
+                let sql ="INSERT INTO book(NameBook,ID_Category,Price,ID_Author,ID_Publisher,Quantity_Book,Description,imagePath,Discount) VALUES (?,?,?,?,?,?,?,?,?)";
+                let values=[req.body.BookName,req.body.Category,req.body.Price,req.body.Author,req.body.Publisher,req.body.Quantity,req.body.Description,'../plugins/images/default.jpg',req.body.Discount];
                 const State = await query(sql,values);
                 res.redirect('/BookManagement');
             }
