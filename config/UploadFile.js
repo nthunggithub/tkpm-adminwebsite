@@ -4,19 +4,7 @@ var Product=require("../models/product");
 
 var mysql=require('mysql');
 const util = require('util');
-var db=mysql.createConnection({
-    host :  'localhost',
-    user :  'root',  
-    password : 'khiemkhiem841999',
-    database : 'shopping'
-  });
-  db.connect((err)=>{
-
-    if(err){
-        throw err;
-    }
-    console.log('Mysql Connected')
-})
+var db=require('../models/db');
 
 var storage=multer.diskStorage({
     destination:function(req,file,callback){

@@ -25,7 +25,7 @@ module.exports.Index=async function(req,res,next){
     const products = await query("SELECT * FROM book");  
     
  //   let data=await Order.find({},{date:1, cart:1, _id:0});
-    const data = await query("SELECT * FROM Orders");  
+    const data = await query("SELECT * FROM orders");  
     console.log(data);
     //console.log(data[0].cart);
     var RevenueYear=0;
