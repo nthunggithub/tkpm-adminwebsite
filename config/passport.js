@@ -7,16 +7,16 @@ const util = require('util');
 var db=mysql.createConnection({
     host :  'localhost',
     user :  'root',  
-    password : 'khiemkhiem841999',
+    password : '0905172825',
     database : 'shopping'
   });
   db.connect((err)=>{
-  
+
     if(err){
         throw err;
     }
     console.log('Mysql Connected')
-  })
+})
 passport.serializeUser(function (user, done) {
     done(null, user.id);
 });

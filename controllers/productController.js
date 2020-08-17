@@ -9,16 +9,16 @@ const { query } = require("express");
 var db=mysql.createConnection({
     host :  'localhost',
     user :  'root',  
-    password : 'khiemkhiem841999',
+    password : '0905172825',
     database : 'shopping'
   });
   db.connect((err)=>{
-  
+
     if(err){
         throw err;
     }
     console.log('Mysql Connected')
-  })
+})
 
 module.exports.deleteproduct= async function(req,res,next){
         const id=req.params.id;
@@ -49,7 +49,7 @@ module.exports.Index=async function(req,res,next){
        var Day=data[i].DateCreated.getDate();
        var Month=data[i].DateCreated.getMonth()+1;
        var Year=data[i].DateCreated.getFullYear();
-        currentdate=new Date();
+       var currentdate=new Date();
         var Quarter=Math.floor((currentdate.getMonth()+1)/3);
         console.log(Quarter);
         var mod=(currentdate.getMonth()+1)%3;
