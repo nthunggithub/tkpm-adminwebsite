@@ -236,11 +236,42 @@ module.exports.BookEntryManagement=async function(req,res,next){
     var data =await query('SELECT * FROM bookentry Limit ? OFFSET ?',[perpage,offset]);
     res.render('BookEntryManagement',{data:data,currentpage:page,total_page:Math.ceil(data2.length/perpage)});
 }
+
+module.exports.RenderRegulation = async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var data=await query('SELECT * FROM regulation');
+    res.render('UpdateRegulation',{data:data[0],errors : req.flash("FailToUpdataRegulation")});
+}
+
+module.exports.UpdateRegulation= async function(req,res,next)
+{
+    const query = util.promisify(db.query).bind(db);
+    var min=req.body.minquality;
+    var max=req.body.maxquality;
+    var errors="";
+    if(parseInt(min)>=parseInt(max))
+    {
+            errors="Thong tin quy dinh khong hop le";
+            req.flash("FailToUpdataRegulation",errors);
+            res.redirect('/UpdateRegulation');
+    }
+    else
+    {
+        var d= new Date();
+        var status=await query('UPDATE regulation SET ID_Admin = ? , minquality = ?,maxquality = ?, DateUpdate = ? WHERE ID_Regulation = ?',[req.user.ID_Admin,parseInt(min),parseInt(max),d,1]);
+        res.redirect('/UpdateRegulation');
+    }
+
+
+}
+
 module.exports.BookEntryDetail=async function(req,res,next){
     const query=util.promisify(db.query).bind(db);
     var data=await query('SELECT * FROM bookentry WHERE ID_BookEntry = ?',[req.params.id]);
     var data2=await query('SELECT db.Quantity,b.NameBook FROM detail_bookentry as db INNER JOIN book as b WHERE db.ID_BookEntry= ? AND db.ID_Book=b.ID_Book',[req.params.id]);
-    res.render('BookEntryDetail',{data:data[0],data2:data2});
+    var data3= await query('SELECT * FROM admin WHERE ID_Admin = ? ',[data[0].ID_Admin]);
+    res.render('BookEntryDetail',{data:data[0],data2:data2,data3:data3[0]});
 }
 //Lay thong tin san pham
 module.exports.EditProduct=async function(req,res,next)
@@ -259,8 +290,11 @@ module.exports.AddBookEntry=async function(req,res,next)
     var Perpage=10;
     var page=req.query.page||1
     var offset=Perpage*(page-1);
-    result1=await query('SELECT * FROM book Limit ? OFFSET ?',[Perpage,offset]);
-    res.render('AddBookEntry',{data:result1,currentpage:page,total_page:Math.ceil(result1.length/Perpage)});
+    var result1=await query('SELECT * FROM book Limit ? OFFSET ?',[Perpage,offset]);
+    var result2=await query('SELECT * FROM regulation ');
+    var min = result2[0].minquality;
+    var max=result2[0].maxquality;
+    res.render('AddBookEntry',{data:result1,min,max,currentpage:page,total_page:Math.ceil(result1.length/Perpage)});
 }
 
 module.exports.AddBookEntry2=async function(req,res,next)
@@ -272,7 +306,7 @@ module.exports.AddBookEntry2=async function(req,res,next)
     var data = await query('INSERT INTO bookentry(ID_Admin,DateCreated) VALUES (?,?)',[req.user.ID_Admin,d]);
     for(i =0 ;i<result.length;i++)
     {
-        if(req.body[result[i].ID_Book]!=="" & req.body[result[i].ID_Book!==undefined])
+        if(req.body[result[i].ID_Book]!=="" && req.body[result[i].ID_Book]!==undefined)
             {
                 check=true;
                 var status = await query('INSERT INTO detail_bookentry(ID_BookEntry,ID_Book,Quantity) VALUES (?,?,?)',[data.insertId,result[i].ID_Book,req.body[result[i].ID_Book]])

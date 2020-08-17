@@ -17,7 +17,7 @@
                         <label class="col-md-8 control-label" style="coloR:BLUE;font-weight:bold; font-size:20px">{{NameBook}}</label>
                               <label class="col-md-8 control-label" style="coloR:black;font-weight:bold; font-size:20px">Nhập số lượng</label>
                         <div class="col-md-8">
-                              <input class="form-control" type="number" name={{ID_Book}} >
+                              <input class="form-control" type="number" min={{../min}} max={{../max}} name={{ID_Book}} >
                         </div>
                     </div>
                     {{/each}}

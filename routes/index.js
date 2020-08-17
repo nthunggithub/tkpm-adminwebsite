@@ -49,6 +49,9 @@ router.get('/BookEntryManagement',middleware.isAuthenticated,ProductController.B
 
 router.get('/BookEntryDetail/:id',middleware.isAuthenticated,ProductController.BookEntryDetail);
 
+router.get('/UpdateRegulation',middleware.isAuthenticated,ProductController.RenderRegulation);
+
+router.post('/UpdateRegulation',middleware.isAuthenticated,ProductController.UpdateRegulation);
 
 router.get('/AddBookEntry',middleware.isAuthenticated,ProductController.AddBookEntry);
 
